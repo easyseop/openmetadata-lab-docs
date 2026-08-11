@@ -103,6 +103,28 @@ table.ft td.id{font-family:var(--mono);color:var(--muted)} table.ft td.feat{font
 .ex-checks code{font-family:var(--mono);font-size:.92em;background:color-mix(in srgb,var(--line) 45%,transparent);padding:1px 5px;border-radius:4px}
 .ex-note{margin-top:9px;font-size:clamp(11px,1.15vw,12.5px);color:var(--muted);line-height:1.45;border-top:1px dashed var(--line);padding-top:8px}
 .ex-doc + .ex-doc{margin-top:9px;border-top:1px dashed var(--line);padding-top:9px}
+.mf-group{margin-top:12px}
+.mf-gh{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;font-weight:700;font-size:clamp(13px,1.5vw,15px);margin-bottom:4px}
+.mf-gh .cat{color:var(--text)} .mf-gh .role{color:var(--muted);font-weight:400;font-size:.85em}
+details.mf{border:1px solid var(--line);border-radius:8px;margin:5px 0;background:var(--panel);overflow:hidden}
+details.mf>summary{cursor:pointer;padding:8px 12px;font-size:clamp(12px,1.35vw,13.5px);list-style:none;display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+details.mf>summary::-webkit-details-marker{display:none}
+details.mf>summary::before{content:"▸";color:var(--teal);font-size:10px}
+details.mf[open]>summary::before{content:"▾"}
+details.mf>summary .fn{font-family:var(--mono);color:var(--teal);font-weight:600}
+details.mf>summary .use{color:var(--muted)}
+details.mf .mbody{padding:2px 12px 12px 12px;font-size:clamp(11.5px,1.3vw,13px);line-height:1.5;color:var(--text)}
+details.mf .mbody b{color:var(--text)}
+details.mf .mbody pre{background:color-mix(in srgb,var(--line) 28%,transparent);border-radius:6px;padding:8px 10px;font-family:var(--mono);font-size:clamp(10px,1.1vw,11.5px);line-height:1.5;overflow-x:auto;white-space:pre-wrap;word-break:break-word;margin:6px 0}
+details.mf .mbody .use2{display:block;color:var(--muted);margin-top:4px}
+.mf-badge{font-family:var(--mono);font-size:10px;font-weight:700;border-radius:5px;padding:1px 7px;margin-left:6px;white-space:nowrap}
+.mf-badge.keep{background:var(--green-soft);color:var(--green)}
+.mf-badge.cut{background:color-mix(in srgb,var(--faint) 20%,transparent);color:var(--muted)}
+.mf-badge.hold{background:var(--amber-soft);color:var(--amber)}
+.mf-badge.new{background:var(--blue-soft);color:var(--blue)}
+details.mf.cut{opacity:.5}
+details.mf.cut>summary .fn{text-decoration:line-through}
+details.mf.new{border-style:dashed;border-color:color-mix(in srgb,var(--blue) 55%,var(--line))}
 @media (max-width:820px){.concept{grid-template-columns:1fr}.ex-grid{grid-template-columns:1fr}.ex-grid>div:first-child{border-right:none;border-bottom:1px solid var(--line)}}
 @media (max-width:780px){.cmp-row{grid-template-columns:1fr}.cmp-row>div{border-top:1px solid var(--line)}.two{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:no-preference){
@@ -111,7 +133,7 @@ table.ft td.id{font-family:var(--mono);color:var(--muted)} table.ft td.feat{font
 </style>
 
 <div class="progress" id="prog"></div>
-<div class="counter" id="cnt">01 / 15</div>
+<div class="counter" id="cnt">01 / 16</div>
 <main class="deck" id="deck">
 
   <section class="slide hero"><div class="wrap">
@@ -127,7 +149,7 @@ table.ft td.id{font-family:var(--mono);color:var(--muted)} table.ft td.feat{font
   </div></section>
 
   <section class="slide"><div class="wrap">
-    <div class="eyebrow"><span class="sn">S02 / 15</span> · 왜 시작했나</div>
+    <div class="eyebrow"><span class="sn">S02 / 16</span> · 왜 시작했나</div>
     <h2>배경과 처음의 생각</h2>
     <div class="rows">
       <div class="row b-blue"><span class="k">목표</span><p>우리가 손댄 부분(DB 커넥터·자체 화면·한글 입력 등)이 공식 버전업 뒤에도 안 깨지고 살아 있는지 확인한다.</p></div>
@@ -137,7 +159,7 @@ table.ft td.id{font-family:var(--mono);color:var(--muted)} table.ft td.feat{font
   </div></section>
 
   <section class="slide"><div class="wrap">
-    <div class="eyebrow"><span class="sn">S03 / 15</span> · 어떻게 만들었나 (초기)</div>
+    <div class="eyebrow"><span class="sn">S03 / 16</span> · 어떻게 만들었나 (초기)</div>
     <h2>처음 만든 것 — 규칙 기반 자동 검사기</h2>
     <div class="concept">
       <div class="c"><b>파일 위치</b><span>‘이 기능은 이 파일들에’를 목록에 적고 대조</span></div>
@@ -187,27 +209,26 @@ allowed_changed_paths:          <span class="cm"># 건드려도 되는 경로 ~5
   </div></section>
 
   <section class="slide"><div class="wrap">
-    <div class="eyebrow"><span class="sn">S04 / 15</span> · 직접 돌려봄</div>
+    <div class="eyebrow"><span class="sn">S04 / 16</span> · 직접 돌려봄</div>
     <h2>업그레이드 테스트</h2>
     <div class="two">
       <div class="row b-green"><span class="k">1.13.0→1.13.1</span><p><b>성공</b> — 변화가 작아 충돌 0·자동 병합. 규칙 기반으로 깔끔히 통과. <span class="tag t-green">PASS</span></p></div>
-      <div class="row b-red"><span class="k">1.13.1→1.13.2</span><p><b>여기서 막힘</b> — 아래 참조. <span class="tag t-red">FAIL</span></p></div>
+      <div class="row b-red"><span class="k">1.13.1→1.13.2</span><p><b>여기서 막힘</b> — 아래 ①→② 순서. <span class="tag t-red">FAIL</span></p></div>
     </div>
     <div class="rows">
-      <div class="row b-teal"><span class="k">실행</span><p>1.13.2 이미지 빌드 → 기존 데이터 이관 → 서버 기동 → 우리가 만든 API 확인까지 실제로 수행.</p></div>
-      <div class="row b-green"><span class="k">확인</span><p>InstanceCode는 실제 서버에서 생성·조회·수정·검색·삭제까지 동작. <span class="tag t-green">PASS</span></p></div>
-      <div class="row b-red"><span class="k">그러나</span><p>벤더 병합에서 <b>충돌 다수(파일이 사라지거나 겹침)</b>. 충돌을 어찌어찌 고쳐도 — 그 커밋과 엮인 <b>관리 파일 ~25개</b>·<b>커밋 이력(Customization-ID) 관리</b>, 생성코드 재생성 시 커스텀이 사라져 재적용 등으로 <b>지속 운영의 한계</b>를 느낌.</p></div>
+      <div class="row b-red"><span class="k">① 병합 (먼저)</span><p>공식 1.13.2를 커스텀에 병합 → <b>충돌 다수 + Sybase 코드가 다른 파일로 이사(리로케이션)</b>. 커스텀을 새 위치에 <b>수작업 재적용</b>하고 관리 파일 ~25개·커밋 이력도 함께 손봐야 했다. <span class="sub">← ‘충돌’은 여기서 난다.</span></p></div>
+      <div class="row b-green"><span class="k">② 실행·검증 (그 뒤)</span><p>병합을 <b>수작업으로 해결한 뒤</b> 그 소스로 이미지 빌드 → 데이터 이관 → 서버 기동 → API 확인. InstanceCode는 실제 서버에서 CRUD·검색까지 동작. <span class="tag t-green">PASS</span> <span class="sub">← ‘실행’ = 병합 해결 후 돌린 것.</span></p></div>
     </div>
-    <div class="callout"><span class="lbl">결론</span>작은 버전업(하위 패치)엔 규칙 기반이 깔끔히 통했다. 그러나 <b>1.13.2처럼 공식이 커넥터 코드를 다른 파일로 옮기는 등 구조 변화가 커지자 규칙 기반이 오판(리로케이션)</b>했다 — 이런 경우 한계를 느꼈다. <span style="font-weight:400;color:var(--muted)">(리로케이션 = 코드가 다른 파일로 이사 갔는데 옛 경로만 봐서 “사라졌다”고 오판 — 7페이지)</span></div>
+    <div class="callout"><span class="lbl">그래서</span>리로케이션처럼 <b>무엇이 어떻게 바뀔지 미리 알 수 없는 변경</b>이 언제든 생길 수 있어, 여기까지 생각하면 <b>규칙 기반만으론 지속이 어렵다</b>고 판단했다. → 그래서 <b>유연한 LLM 쪽으로 방향을 튼다.</b> 단, 규칙 기반 검사기는 버리지 않고(다음 장), 그 강점을 살려 LLM을 통제한다.</div>
   </div></section>
 
   <section class="slide"><div class="wrap">
-    <div class="eyebrow"><span class="sn">S05 / 15</span> · 왜 ‘룰베이스 검사기’인가</div>
+    <div class="eyebrow"><span class="sn">S05 / 16</span> · 왜 ‘룰베이스 검사기’인가</div>
     <h2>강점 — LLM 혼자선 보장 못 하는 것들</h2>
     <p class="lede">아래는 전부 <b>LLM에게 맡기면 “됐다”는 말로 끝나는</b> 것 — 그래서 결정론적 검사기가 필요하다.</p>
     <div class="rows">
-      <div class="row b-green"><span class="k">patch-kill</span><p>기능을 <b>실제로 빼보고</b> 그 테스트가 실패해야 진짜로 인정(‘속 빈 테스트’ 색출). <span class="sub">LLM은 “테스트 통과”라 적으면 끝 → 그게 진짜 지키는지 모름. 검사기는 기능을 제거해 확인(Sybase·Tibero에서 입증).</span></p></div>
-      <div class="row b-green"><span class="k">fail-closed</span><p>검사가 빠지거나 실패하면 자동으로 통과 안 됨. <span class="sub">LLM은 “대충 됐다”로 넘어갈 수 있음 → 검사기는 픽스처 없으면 BLOCK(‘안 돌린 걸 통과로’ 원천 차단).</span></p></div>
+      <div class="row b-green"><span class="k">patch-kill</span><p><b>커스텀이 없으면 그 테스트가 반드시 실패해야</b> 진짜로 인정(‘속 빈 테스트’ 색출). <span class="sub"><b>예) Sybase</b> — Sybase 코드가 없던 <b>이전 커밋</b>을 꺼내 그 테스트를 돌리니 <b>실패</b> → “이 테스트가 진짜 Sybase를 지킨다”가 입증됨(그때도 통과했다면 = 속 빈 테스트). ※ 이 테스트는 <b>소스 파일만 열어보는 파이썬 테스트</b>라 빌드·서버 없이 실행됨. 반면 InstanceCode처럼 실제 서버로 봐야 하는 건 기능 뺀 이미지가 따로 필요(일부 pending — 12p).</span></p></div>
+      <div class="row b-green"><span class="k">막고 보기(fail-closed)</span><p><b>기능별 검사(테스트) 하나라도 못 돌면 ‘통과’가 아니라 ‘막음’</b>으로 떨어진다. <span class="sub">검사할 데이터가 없거나 오류·시간초과로 검사를 못 돌린 경우, 검사기는 그걸 통과로 세지 않는다. 예: ‘확장컬럼 화면’을 볼 데이터가 인스턴스에 없어 그 검사를 건너뛰면(skip) → 통과가 아니라 막음(BLOCK). LLM이라면 “대충 됐다”로 넘어갈 지점을 원천 차단.</span></p></div>
       <div class="row b-green"><span class="k">candidate-lock(못박기)</span><p>검사한 코드를 특정 커밋·tree에 고정, 이후 변경을 감지. <span class="sub">LLM 기록은 나중에 고쳐도 티가 안 남 → 검사기는 지문이 어긋나면 드러남(전자서명은 아님, 변경 ‘감지’).</span></p></div>
       <div class="row b-green"><span class="k">data-check(기계 대조)</span><p>화면·API 값을 <b>행 단위로 기계 비교</b>. <span class="sub">LLM/사람 눈대중은 “비슷하니 맞겠지” → 검사기는 정확히 일치/불일치로 판정(화면 A matched).</span></p></div>
       <div class="row b-green"><span class="k">결정론(재현성)</span><p>같은 코드면 <b>항상 같은 결과</b>. <span class="sub">LLM은 같은 입력에도 답이 흔들림 → 검사기는 재현 가능해 ‘배포 기준’이 될 수 있음.</span></p></div>
@@ -215,7 +236,7 @@ allowed_changed_paths:          <span class="cm"># 건드려도 되는 경로 ~5
   </div></section>
 
   <section class="slide"><div class="wrap">
-    <div class="eyebrow"><span class="sn">S06 / 15</span> · 드러난 한계 ① — 지속 가능 운영</div>
+    <div class="eyebrow"><span class="sn">S06 / 16</span> · 드러난 한계 ① — 지속 가능 운영</div>
     <h2>지속 가능 운영의 한계 — 관리할 파일이 너무 많다</h2>
     <div class="rows">
       <div class="row b-red"><span class="k">부담</span><p>무엇을 바꿨는지·어디까지 허용인지·누가 승인했는지를 전부 사람이 파일로 관리한다.</p></div>
@@ -226,28 +247,28 @@ allowed_changed_paths:          <span class="cm"># 건드려도 되는 경로 ~5
   </div></section>
 
   <section class="slide"><div class="wrap">
-    <div class="eyebrow"><span class="sn">S07 / 15</span> · 드러난 한계 ②</div>
+    <div class="eyebrow"><span class="sn">S07 / 16</span> · 드러난 한계 ②</div>
     <h2>규칙 검사만으로는 못 보는 것들</h2>
     <div class="rows">
       <div class="row b-red"><span class="k">이동(리로케이션)</span><p>공식이 코드를 다른 파일로 옮기면 못 따라간다 (가장 큰 약점). <span class="sub">실제: Sybase의 <code>case DatabaseServiceType.Sybase</code> 코드가 <code>DatabaseServiceUtils.tsx</code> → <code>*PureUtils.ts</code>로 이사. 검사기는 매니페스트의 옛 경로만 봐서 “커스텀이 사라졌다”며 실패(BLOCK). 실제론 새 파일에 멀쩡히 살아있었음 = 오판.</span></p></div>
-      <div class="row b-red"><span class="k">의미(반쪽 병합)</span><p>“파일이 공식과 다르다” ≠ “기능이 온전하다”. <span class="sub">실제: 마이그레이션 체크섬 누락으로 서버가 기동 실패한 적도 있음 — 파일은 있는데 런타임이 깨진 경우. 경로만 보는 검사로는 못 잡음.</span></p></div>
+      <div class="row b-red"><span class="k">의미(반쪽 병합)</span><p>검사기의 ‘생존’ 판정 기준은 <b>“커스텀 파일이 공식과 다른가”</b>다. 그런데 <b>“다르다” ≠ “기능이 온전하다”</b>. <span class="sub">병합이 어긋나 커스텀 로직이 <b>반쪽만</b> 들어가도 ‘공식과 다름’은 성립 → survived(통과)로 봐버림. (또 DB 마이그레이션이 어긋나 <b>서버가 아예 안 뜬</b> 적도 있음 — 파일은 멀쩡한데 런타임이 깨진 경우. 경로만 보는 검사론 못 잡음.)</span></p></div>
       <div class="row b-red"><span class="k">입력(사람 값)</span><p>일부 판단 근거를 사람이 손으로 적는다. <span class="sub">실제: 충돌률·승인자 같은 값은 사람이 입력 → 검사기는 그 숫자가 ‘진짜인지’는 확인 못 함(형식만 검사).</span></p></div>
     </div>
     <div class="callout"><span class="lbl">결론</span>규칙(파일·글자 기준)을 더 붙여도 이 약점은 반복된다 — 구조적 한계다. <span style="font-weight:400;color:var(--muted)">단, 이건 <b>변화가 클 때</b> 얘기다 — 작은 버전업에선 규칙 기반이 잘 통했다.</span></div>
   </div></section>
 
   <section class="slide"><div class="wrap">
-    <div class="eyebrow"><span class="sn">S08 / 15</span> · 다른 접근에서 얻은 힌트</div>
-    <h2>8/5 공유된 ‘LLM 기반 운영 방식’을 함께 검토</h2>
+    <div class="eyebrow"><span class="sn">S08 / 16</span> · 참고한 다른 접근</div>
+    <h2>8/5 공유된 ‘LLM 기반 운영 방식’ (참고)</h2>
     <div class="rows">
-      <div class="row b-green"><span class="k">강점</span><p>규칙·지식 문서·자동화로 버전 포팅 시간을 크게 줄였다 — 빠르고 체계적.</p></div>
+      <div class="row b-blue"><span class="k">개념</span><p>규칙·지식 문서·자동화로 LLM이 버전 포팅을 빠르게 수행하는 방식. <span class="sub">“포팅 시간 크게 단축(빠르고 체계적)”은 그 방식의 <b>자체 보고 수치</b> — 우리가 실행·검증한 건 아니다.</span></p></div>
       <div class="row b-blue"><span class="k">구조</span><p>변경·수정·테스트·결과 기록을 대부분 LLM이 스스로 수행하고, 그 결과도 스스로 문서에 적는다.</p></div>
     </div>
-    <div class="callout good"><span class="lbl">검토 소감 — 까려는 게 아니라 보완 제안</span>여기에 검사기로 ‘각 판단의 근거를 자동으로 뒷받침’하는 층을 더하면, <b>속도(LLM)는 살리고 신뢰(근거)는 끌어올릴 수 있겠더라.</b> 두 방식은 경쟁이 아니라 ‘빠른 실행 + 단단한 근거’로 합쳐진다.</div>
+    <div class="callout good"><span class="lbl">우리 생각 — 검증이 아니라 방향 제안</span>이 접근에 검사기로 ‘각 판단의 근거를 자동으로 뒷받침’하는 층을 더하면, <b>속도(LLM)는 살리고 신뢰(근거)는 끌어올릴 수 있겠다.</b> 경쟁이 아니라 ‘빠른 실행 + 단단한 근거’로 합쳐진다.</div>
   </div></section>
 
   <section class="slide"><div class="wrap">
-    <div class="eyebrow"><span class="sn">S09 / 15</span> · 방향 전환</div>
+    <div class="eyebrow"><span class="sn">S09 / 16</span> · 방향 전환</div>
     <h2>LLM이 일하고, 검사기가 근거를 붙인다</h2>
     <div class="two">
       <div class="row b-blue"><span class="k">LLM</span><p><b>판단·제안</b><span class="sub">무엇을 바꿀지, 코드가 어디로 옮겨졌을지, 충돌 해결, 필요한 테스트.</span></p></div>
@@ -258,14 +279,14 @@ allowed_changed_paths:          <span class="cm"># 건드려도 되는 경로 ~5
   </div></section>
 
   <section class="slide"><div class="wrap">
-    <div class="eyebrow"><span class="sn">S10 / 15</span> · 도입 제안 — 검사기 시스템</div>
+    <div class="eyebrow"><span class="sn">S10 / 16</span> · 도입 제안 — 검사기 시스템</div>
     <h2>커스텀 하나(BANK-OM ID)가 검증되는 과정</h2>
     <p class="lede"><b>제안:</b> 하이브리드에서 LLM 작업의 ‘증거 층’으로 <b>이 검사기를 도입</b>한다 (자랑이 아니라 도입 대상). 커스텀 하나가 아래 <b>6단계</b>로 등록·검사·증거화된다.</p>
     <div class="flow">
       <div class="step"><span class="num">1</span><h3>등록 — Manifest · Registry · Contract</h3><p>무엇을·어디를 바꿨고, 어떤 전용 계약으로 지킬지 선언한다.</p></div>
       <div class="step"><span class="num">2</span><h3>커밋 · 변경범위 검사</h3><p>이 ID가 선언한 범위만 건드렸는지, 공식 계보 위에 얹혔는지 확인.</p></div>
       <div class="step"><span class="num">3</span><h3>공용 파일의 ID별 코드 검사</h3><p>여러 기능이 공유하는 파일에서 이 ID 몫의 코드가 살아있고 공식과 달라졌는지.</p></div>
-      <div class="step"><span class="num">4</span><h3>전용 Contract 실행</h3><p>이 기능만의 계약 테스트(API/화면/소스). 속 빈 테스트면 patch-kill로 걸러낸다.</p></div>
+      <div class="step"><span class="num">4</span><h3>전용 검사 실행</h3><p>이 기능만의 검사(API/화면/소스). 속 빈 테스트면 patch-kill로 걸러낸다.</p></div>
       <div class="step"><span class="num">5</span><h3>commit · 이미지와 결과 결속</h3><p>검사 결과를 특정 커밋·이미지에 못박아 바꿔치기·사후수정을 감지.</p></div>
       <div class="step"><span class="num">6</span><h3>승인 · 증거 보관</h3><p>권한자 승인 + 증거(무엇을·어떤 코드에서·어떤 결과) 보관. 승인은 결과에 결속.</p></div>
     </div>
@@ -273,10 +294,10 @@ allowed_changed_paths:          <span class="cm"># 건드려도 되는 경로 ~5
   </div></section>
 
   <section class="slide"><div class="wrap">
-    <div class="eyebrow"><span class="sn">S11 / 15</span> · 기능마다 전용 계약</div>
-    <h2>7개 기능별 Contract 검사표 (BANK-OM-001~007)</h2>
+    <div class="eyebrow"><span class="sn">S11 / 16</span> · 기능마다 전용 검사</div>
+    <h2>7개 기능별 검사표 (BANK-OM-001~007)</h2>
     <div class="tbl-wrap"><table class="ft">
-      <thead><tr><th>ID</th><th>기능</th><th>계약 유형</th><th>중요도</th><th>현재 검증 상태</th></tr></thead>
+      <thead><tr><th>ID</th><th>기능</th><th>검사 유형</th><th>중요도</th><th>현재 검증 상태</th></tr></thead>
       <tbody>
         <tr><td class="id">001</td><td class="feat">InstanceCode</td><td>API</td><td>high</td><td><span class="pill p-green">1.13.1 통과 · 1.13.2 실제 동작 통과</span></td></tr>
         <tr><td class="id">002</td><td class="feat">QueryReport</td><td>API</td><td>high</td><td><span class="pill p-amber">1.13.1 통과 · 1.13.2 부분(픽스처)</span></td></tr>
@@ -287,11 +308,11 @@ allowed_changed_paths:          <span class="cm"># 건드려도 되는 경로 ~5
         <tr><td class="id">007</td><td class="feat">Tibero 커넥터</td><td>소스 정합성</td><td>high</td><td><span class="pill p-amber">1.13.1 통과 · patch-kill 입증 · 1.13.2 이동→재anchor</span></td></tr>
       </tbody>
     </table></div>
-    <p class="note">필수 Contract 9개 = 위 required_test 합 (<b>API 4 · 화면 3 · 소스 2</b>; 003·004는 API+화면 2개씩). 008~011은 기술 보완용 임시 ID(InstanceCode·QueryReport 계약에 연결, 사용자 확정 전).</p>
+    <p class="note">필수 검사 9개 = 위 테스트 합 (<b>API 4 · 화면 3 · 소스 2</b>; 003·004는 API+화면 2개씩). 008~011은 기술 보완용 임시 ID(InstanceCode·QueryReport 검사에 연결, 사용자 확정 전).</p>
   </div></section>
 
   <section class="slide"><div class="wrap">
-    <div class="eyebrow"><span class="sn">S12 / 15</span> · 과장 없이</div>
+    <div class="eyebrow"><span class="sn">S12 / 16</span> · 과장 없이</div>
     <h2>정직한 검증 현황</h2>
     <div class="tbl-wrap"><table class="ft">
       <thead><tr><th style="width:32%">항목</th><th>현황</th></tr></thead>
@@ -306,9 +327,114 @@ allowed_changed_paths:          <span class="cm"># 건드려도 되는 경로 ~5
   </div></section>
 
   <section class="slide"><div class="wrap">
-    <div class="eyebrow"><span class="sn">S13 / 15</span> · 원리 — 대표 예시 4개 (전부가 아님)</div>
-    <h2>왜 ‘MD 문서’가 아니라 ‘검사기’인가</h2>
-    <p class="lede"><b>‘도움’은 아래 4개가 아니다.</b> 앞의 <b>6단계 × 7개 전용 계약(S10~12) 전부</b>가 LLM의 각 주장에 증거를 붙인다 — 아래는 그 원리를 보여주는 대표 예시다. 문서는 LLM이 스스로 적는 글(안 해보고/고쳐도 티가 안 남), 검사기는 실제 코드·실행 증거라 지어내기 어렵고 <b>보호된 CI에서 생성·보관하면 임의 변경을 감지</b>할 수 있다.</p>
+    <div class="eyebrow"><span class="sn">S13 / 16</span> · 자유서술 MD 대신 구조화 자산</div>
+    <h2>우리 관리 파일 (16종) — 1차 검토 결과</h2>
+    <p class="lede">8/5 방식은 LLM이 자유서술 MD로 자기보고. 우리는 같은 정보를 <b>형식이 정해진 16종 파일</b>로 관리해 검사기가 대조 가능 — 어느 것도 ‘LLM 자유서술’로 두지 않는다.</p>
+    <p class="note" style="margin-top:2px">▸ 각 파일을 눌러 펼치면 <b>용도 · 실제 예시 · 검사기가 그 예시를 어떻게 쓰는지</b>가 나옵니다.</p>
+    <p class="note" style="margin-top:4px">▸ <b>1차 검토 결과</b> — <span class="mf-badge keep">채택</span> 8종 · <span class="mf-badge cut">제외</span> 6종(삭선·흐림, 지우지 않고 남김) · <span class="mf-badge hold">보류</span> 2종 · <span class="mf-badge new">신규</span> 2종 제안</p>
+
+    <div class="mf-group">
+      <div class="mf-gh"><span class="cat">A. 정의 — 무엇이 커스텀인가</span><span class="pill p-blue">LLM이 초안, 사람이 확인</span><span class="role">1차 검토 → 5종 전부 채택</span></div>
+      <details class="mf"><summary><span class="fn">customization-registry.yaml</span><span class="use">우리가 손댄 기능 전체 명단</span><span class="mf-badge keep">채택</span></summary><div class="mbody"><b>무슨 파일</b> — 우리가 손댄 기능(커스텀)을 전부 적어둔 명단. 어떤 기능이 있고, 담당자·중요도, 그 기능을 지키는 검사와 상세 파일, 어떤 공식 버전 위에서 만들었는지.<pre>entries:
+  - customization_id: BANK-OM-001
+    title: InstanceCode
+    criticality: high
+    manifest: manifests/BANK-OM-001.yaml
+    contracts: [CONTRACT-INSTANCE-CODE]</pre><span class="use2"><b>어떻게 쓰나</b> — 프로그램이 ‘이번에 검사할 기능들’을 이 명단에서 고른다. 모든 검사가 이 명단의 기능만 본다. 중요도가 ‘높음’이면 ‘빼보기 검사’ 대상이 된다.</span></div></details>
+      <details class="mf"><summary><span class="fn">manifests/BANK-OM-00N.yaml (11개)</span><span class="use">기능 하나하나의 상세 카드</span><span class="mf-badge keep">채택</span></summary><div class="mbody"><b>무슨 파일</b> — 기능 하나가 ‘건드려도 되는 파일 / 반드시 바뀌어 있어야 하는 핵심 파일 / 지켜봐야 할 공식 공용 파일 / 연결된 검사’를 적은 카드.<pre># BANK-OM-006 (Sybase)
+required_changed_paths:
+  - .../sybaseConnection.json
+allowed_changed_paths: [ ...DatabaseServiceUtils.tsx, databaseService.json ]
+upgrade_watch: { paths: [ .../serviceConnection.json ] }
+assurance: { contracts: [CONTRACT-SYBASE-CONNECTOR] }</pre><span class="use2"><b>어떻게 쓰나</b> — ▸ 핵심 파일이 공식과 달라졌나(=우리 코드가 들어갔나) ▸ 허락한 파일 밖을 건드렸나 ▸ 지켜보던 공식 파일이 이번에 바뀌면 알림.</span></div></details>
+      <details class="mf"><summary><span class="fn">contracts.yaml</span><span class="use">지켜야 할 약속 + 확인 테스트</span><span class="mf-badge keep">채택</span></summary><div class="mbody"><b>무슨 파일</b> — 각 기능이 ‘이건 꼭 지켜져야 한다’는 약속과, 그 약속을 확인하는 테스트 목록.<pre>- id: CONTRACT-INSTANCE-CODE
+  invariant: codeGroup/codeValue가 CRUD·재색인 뒤에도 동일 조회
+  required_tests: [test_instance_code.py::test_crud_search_roundtrip]
+  customization_ids: [BANK-OM-001, ...]</pre><span class="use2"><b>어떻게 쓰나</b> — 기능마다 그 약속을 지키는 테스트가 하나라도 연결돼 있고, 그 테스트가 실제로 있고 돌아가는지 확인(빈 껍데기면 실패 처리).</span></div></details>
+      <details class="mf"><summary><span class="fn">shared-path-owners.yaml</span><span class="use">공유 파일의 기능별 지분(37개)</span><span class="mf-badge keep">채택</span></summary><div class="mbody"><b>무슨 파일</b> — 한 파일을 여러 기능이 같이 고칠 때, 그 파일의 어느 부분이 어느 기능 몫인지 적어둔 ‘지분표’(공유 파일 37개).<pre>.../databaseService.json: [BANK-OM-006, BANK-OM-007]   # Sybase, Tibero
+.../AuthenticatedAppRouter.tsx: [BANK-OM-001, 002, 003]  # 3개 화면·경로
+.../locale/ko-kr.json: [BANK-OM-001..004]               # 뜻 있는 문구 추가</pre><span class="use2"><b>어떻게 쓰나</b> — 그 공유 파일에서 ‘각 기능 몫의 코드가 그대로 살아있나’를 기능별로 확인(다국어 파일은 ‘뜻 있는 문구 추가’만 지분으로 보고, 줄맞춤 변경은 무시).</span></div></details>
+      <details class="mf"><summary><span class="fn">source-diff-paths.txt</span><span class="use">바뀐 파일 전체 목록(113)</span><span class="mf-badge keep">채택</span></summary><div class="mbody"><b>무슨 파일</b> — 우리 코드가 공식과 다른 ‘바뀐 파일 전체 목록’. 무엇을 커스텀했는지의 원천 목록.<pre>.../InstanceCodeResource.java
+.../QueryReportResource.java
+docker/development/docker-compose.yml   # ← 등록 안 된 위험 파일(별도 처리)</pre><span class="use2"><b>어떻게 쓰나</b> — 이 목록으로 상세 카드(매니페스트) 초안을 자동 제안. 목록엔 있는데 어느 카드에도 안 적힌 파일 = ‘등록 누락’ 경고.</span></div></details>
+    </div>
+
+    <div class="mf-group">
+      <div class="mf-gh"><span class="cat">B. 정책 — 기준선·한계</span><span class="pill p-gray">사람·조직이 정해 고정(늘 같은 결과)</span><span class="role">1차 검토 → 위험 구역만 채택, 나머지 3종 제외</span></div>
+      <details class="mf"><summary><span class="fn">policies/sensitive-zones.yaml</span><span class="use">손대면 위험한 구역(차단/승인/경고)</span><span class="mf-badge keep">채택</span></summary><div class="mbody"><b>무슨 파일</b> — 손대면 위험한 영역을 3단계로 구분: <code>frozen</code>(절대 금지)·<code>protected</code>(승인 필요)·<code>watched</code>(경고).<pre>frozen:    [ .../service/security/** ]
+protected: [ .../schema/auth/**, conf/** ]
+upstream_base_sha: e6c6650...</pre><span class="use2"><b>어떻게 쓰나</b> — 바뀐 파일이 어느 구역이냐에 따라 — 절대 금지면 막고, 승인 필요면 승인 받아야 하고, 경고면 알림만. 예외는 지정 승인으로만.</span></div></details>
+      <details class="mf cut"><summary><span class="fn">policies/repository-layout.yaml</span><span class="use">공식 코드 / 우리 것 구분 지도</span><span class="mf-badge cut">제외</span></summary><div class="mbody"><b>무슨 파일</b> — ‘이 폴더는 공식 코드 / 이건 우리 것’을 가르는 지도 + 경로 표기 규칙. 모든 검사가 같은 기준으로 경로를 읽도록 고정.<pre>path_grammar: { name: gitignore-pathspec, negation_allowed: false, symlink_policy: reject }
+upstream_owned_roots: [ openmetadata-service/**, openmetadata-ui/**, ... ]
+bank_governance_roots: [ tests/bank/**, docs/bank/** ]</pre><span class="use2"><b>어떻게 쓰나</b> — 어떤 폴더가 공식인지 우리 것인지 판정. 새로 생긴 최상위 폴더가 어디에도 안 잡히면 ‘모름 → 일단 막음’.</span><span class="use2"><b>1차 검토 — 제외</b> · 공식/우리 것 구분은 매니페스트의 경로 목록과 위험 구역만으로도 판별된다. 지도를 따로 두고 계속 최신으로 맞추는 비용 대비 실익이 적다.</span></div></details>
+      <details class="mf cut"><summary><span class="fn">policies/debt-thresholds.yaml</span><span class="use">고친 양 상한선</span><span class="mf-badge cut">제외</span></summary><div class="mbody"><b>무슨 파일</b> — 우리가 고친 양(파일 수·줄 수 등)이 너무 많아지지 않게 하는 상한선.<pre>thresholds:
+  core_patch_count: {soft: 14, hard: 19}
+  changed_lines:    {soft: 14000, hard: 18000}
+# conflict_rate는 매 업그레이드가 입력</pre><span class="use2"><b>어떻게 쓰나</b> — 실제 고친 양이 1차선(<code>soft</code>)을 넘으면 승인 받게 하고, 2차선(<code>hard</code>)을 넘으면 막음. 감당 못 할 만큼 불어나는 걸 미리 차단.</span><span class="use2"><b>1차 검토 — 제외</b> · 필요해서 고친 양이 많아진 것까지 막힐 수 있다. 우리 작업량에 굳이 상한선을 걸 필요가 없다고 판단.</span></div></details>
+      <details class="mf cut"><summary><span class="fn">change-intent-current.yaml</span><span class="use">이번 작업의 허용/금지 범위</span><span class="mf-badge cut">제외</span></summary><div class="mbody"><b>무슨 파일</b> — 이번 작업에서 ‘여기까지는 손대도 됨 / 여긴 절대 안 됨’을 적어둔 범위.<pre>allowed_from_active_manifests: true
+forbidden: [ .github/**, harness/** ]</pre><span class="use2"><b>어떻게 쓰나</b> — 정해둔 범위 밖을 건드렸는지 판단하는 기준. 금지 구역(<code>forbidden</code>)을 건드리면 막음.</span><span class="use2"><b>1차 검토 — 제외</b> · 작업할 때마다 범위를 다시 적어야 하는 부담이 있다. 정말 막아야 할 곳은 위험 구역(<code>sensitive-zones</code>)이 이미 막고 있으므로 중복.</span></div></details>
+    </div>
+
+    <div class="mf-group">
+      <div class="mf-gh"><span class="cat">C. 계획 — 무슨 검사를 어떻게</span><span class="pill p-blue">LLM이 초안, 사람이 확인</span><span class="role">1차 검토 → ‘빼보기’ 2종 제외, 직전 기록 확인으로 대체 · 예행연습 표는 보류</span></div>
+      <details class="mf cut"><summary><span class="fn">patch-kill-plan.yaml</span><span class="use">빼보기 검사 계획(소스)</span><span class="mf-badge cut">제외</span></summary><div class="mbody"><b>무슨 파일</b> — ‘기능을 일부러 빼봤을 때 정말 검사가 실패하나’를 확인할 계획. 각 기능의 ‘넣기 전 버전(<code>without_patch_sha</code>)’과 돌릴 테스트.<pre>- customization_id: BANK-OM-006
+  without_patch_sha: 6e5b654...
+  required_test: test_sybase.py::test_connection_schema_roundtrip
+  method: predecessor-source-negative-control</pre><span class="use2"><b>어떻게 쓰나</b> — ‘넣기 전 버전’을 꺼내 그 테스트를 돌려 → 실패해야 정상. 그때도 통과하면 그 테스트는 헛것(속 빈 테스트) → 막음.</span><span class="use2"><b>1차 검토 — 제외</b> · ‘넣기 전 버전’을 따로 꺼내 매번 돌리는 비용이 크다. 아래 <b>직전 버전 테스트 기록 확인</b>으로 대체.</span></div></details>
+      <details class="mf cut"><summary><span class="fn">runtime-patch-kill-plan.yaml</span><span class="use">빼보기 검사 계획(실서버, 예정)</span><span class="mf-badge cut">제외</span></summary><div class="mbody"><b>무슨 파일</b> — 위 ‘빼보기’를 실제 서버로 하는 계획. 기능 뺀 서버 이미지·정상 동작 확인·반복 횟수.<pre>- customization_id: BANK-OM-001
+  without_patch_sha: afcb2d2...
+  required_test: test_instance_code.py::test_crud_search_roundtrip
+  probes: [_runtime_patch_kill_probes.py::test_api_health]
+  target_repeats: 2</pre><span class="use2"><b>어떻게 쓰나</b> — 기능 뺀 이미지로 서버를 띄워 그 테스트가 실패하는지 + 서버 자체는 살아있는지 확인. (아직 안 돌린 것 있음 — 12p)</span><span class="use2"><b>1차 검토 — 제외</b> · 기능을 뺀 서버 이미지를 따로 빌드해 띄우는 부담이 특히 크다. 위와 같은 이유로 대체.</span></div></details>
+      <details class="mf"><summary><span class="fn">upgrade-rehearsal-matrix.yaml</span><span class="use">버전 올림 예행연습 표</span><span class="mf-badge hold">보류</span></summary><div class="mbody"><b>무슨 파일</b> — 어떤 버전 올림을 어떤 순서로 예행연습할지 짠 표(진짜 브랜치는 안 건드리고 임시 복사본에서).<pre>runs:
+  - id: om-1-13-0-to-1-13-1
+    upstream_base:   { tag: 1.13.0-release }
+    upstream_target: { tag: 1.13.1-release }
+    expected_git_relation: ancestor
+stages: [identify-refs, upstream-diff, bank-diff, reapply-detect, source-gates, ...]</pre><span class="use2"><b>어떻게 쓰나</b> — 각 예행연습을 임시 복사본에서 돌려, 단계별로 ‘우리 코드가 잘 옮겨졌나·검사 통과했나’를 기록. (4페이지의 1.13.0→1.13.1이 여기 적힌 예행연습)</span><span class="use2"><b>1차 검토 — 보류</b> · 용도는 ‘진짜 브랜치를 건드리기 전에 일회용 복사본에서 버전 올림을 미리 돌려보고, 이번 업그레이드가 위험한지 먼저 알아보는 것’. 쓸모는 있어 보이나 운영 방식을 더 고민한 뒤 결정.</span></div></details>
+      <details class="mf new"><summary><span class="fn">previous-run-test-review.yaml</span><span class="use">직전 버전 테스트 기록 확인 (빼보기 대체)</span><span class="mf-badge new">신규</span></summary><div class="mbody"><b>무슨 파일</b> — 기능을 일부러 빼보는 대신, <b>직전 버전에서 남긴 테스트 기록을 확인</b>하는 계획. 새 기능이 생겨 테스트가 추가되는 경우가 아니라면, 이번에 새로 증명하지 않고 직전 기록으로 판단한다.<pre>previous_run: { version: 1.13.1, evidence: source-candidate-evidence.yaml }
+checks:
+  - all_defined_tests_executed: true      # ① 직전에 정의된 테스트가 모두 수행됐나
+  - collect_failures_with_cause: true     # ② 실패했다면 원인은 무엇이었나
+regression_guard_from_failures: true      # ③ 그 원인을 이번 테스트로 승격(재발 방지)</pre><span class="use2"><b>어떻게 쓰나</b> — ① 직전 버전에서 <b>정의된 테스트가 하나도 빠짐없이 실제로 수행됐는지</b> 확인한다(정의만 해두고 안 돌린 것 = 실패로 본다). ② 결국 해결했더라도 <b>오류가 났던 항목은 원인을 함께 기록</b>한다. ③ 그 원인을 이번 버전의 확인 항목으로 올려 <b>같은 오류가 다시 나지 않게</b> 한다 — ‘빼보기’가 하던 역할(테스트가 헛것이 아님을 보이는 것)을 이 기록으로 대신한다.</span></div></details>
+    </div>
+
+    <div class="mf-group">
+      <div class="mf-gh"><span class="cat">D. 못박기·승인 — 위조 방지</span><span class="pill" style="background:var(--red-soft);color:var(--red)">정해진 규칙 + 권한자 승인 (LLM 혼자 X)</span><span class="role">1차 검토 → 이견 없이 채택</span></div>
+      <details class="mf"><summary><span class="fn">candidate-locks/ (lock + approval)</span><span class="use">코드 봉인 + 승인 묶기</span><span class="mf-badge keep">채택</span></summary><div class="mbody"><b>무슨 파일</b> — 검사한 그 코드(정확한 버전)를 못 바꾸게 봉인하고, 승인을 그 결과에 붙이는 것.<pre># &lt;stem&gt;.lock.yaml
+candidate: { commit_sha: ..., tree_sha: ..., artifact_digest: sha256:... }
+# &lt;stem&gt;.approval.yaml
+approver: ...; approved_at: ...; rationale: ...
+candidate_lock_digest: sha256:...   # 내용 바뀌면 승인 자동 무효</pre><span class="use2"><b>어떻게 쓰나</b> — 실제로 돌린 코드가 봉인된 것과 다르면 거부(몰래 바꿔치기 차단). 승인은 그 봉인에 묶여, 내용이 바뀌면 승인이 자동으로 무효. ※지금은 비어있음 — 운영 전 만들어야 함.</span></div></details>
+    </div>
+
+    <div class="mf-group">
+      <div class="mf-gh"><span class="cat">E. 증거 — 실행 결과물</span><span class="pill p-green">검사기가 자동 생성(사람 안 씀)</span><span class="role">1차 검토 → 소스 검사 기록 필수 · 빼보기 기록은 대체 · 화면 기준선 보류</span></div>
+      <details class="mf"><summary><span class="fn">source-candidate-evidence.yaml</span><span class="use">소스 검사 결과 기록</span><span class="mf-badge keep">채택</span></summary><div class="mbody"><b>무슨 파일</b> — 언제·어떤 버전에서·무엇을 검사했는지 남기는 결과 기록.<pre>generated_at: "2026-07-28..."
+candidate: { commit_sha: 849ae75... }
+upstream:  { tag: 1.13.1-release }</pre><span class="use2"><b>어떻게 쓰나</b> — 검사기가 자동으로 남김. 나중에 ‘무엇을 어떤 코드에서 확인했나’를 다시 확인·감사하는 근거.</span></div></details>
+      <details class="mf cut"><summary><span class="fn">source-patch-kill-evidence.yaml</span><span class="use">빼보기 결과 기록</span><span class="mf-badge cut">제외</span></summary><div class="mbody"><b>무슨 파일</b> — ‘빼보기’ 검사 결과(입증됐는지) 기록.<pre>gates:
+  - name: source-patch-kill:BANK-OM-006
+    reasons: ['proven: required test failed without the patch']
+    verdict: pass</pre><span class="use2"><b>어떻게 쓰나</b> — 사이베이스·티베로가 ‘빼면 실패한다’로 입증됐음을 결과와 함께 고정.</span><span class="use2"><b>1차 검토 — 제외</b> · ‘빼보기’ 자체를 빼기로 했으므로 그 결과 기록도 함께 제외. 아래 <b>직전 버전 테스트 기록 확인 결과</b>가 이 자리를 대신한다.</span></div></details>
+      <details class="mf"><summary><span class="fn">ui-typecheck-baseline-evidence.yaml</span><span class="use">화면 코드 타입오류 기준선</span><span class="mf-badge hold">보류</span></summary><div class="mbody"><b>무슨 파일</b> — 화면(UI) 코드의 타입 오류 ‘기준선’을 (실행 환경까지) 기록.<pre>environment: { node: 22.17.0, yarn: 1.22.22 }
+candidate: { sha: 849ae75... }</pre><span class="use2"><b>어떻게 쓰나</b> — 다음 검사와 비교해 ‘새로 늘어난 오류’만 잡아냄(전부를 매번 다시 보지 않음).</span><span class="use2"><b>1차 검토 — 보류</b> · 화면(UI) 코드에 실제로 얼마나 도움이 되는지 확인이 필요해 일단 남겨둔다.</span></div></details>
+      <details class="mf new"><summary><span class="fn">previous-run-test-review-evidence.yaml</span><span class="use">직전 버전 테스트 기록 확인 결과</span><span class="mf-badge new">신규</span></summary><div class="mbody"><b>무슨 파일</b> — 위 <b>C의 신규 항목(직전 버전 테스트 기록 확인)</b>을 실제로 돌린 결과 기록. 소스 검사 결과 기록이 필수인 것처럼, 빼보기 대신 넣은 이 확인도 <b>결과를 남겨야</b> 근거가 된다.<pre>previous_version: 1.13.1
+executed_all_defined_tests: true          # ① 빠짐없이 수행됨
+failures_seen:
+  - test: test_sybase.py::test_connection_schema_roundtrip
+    cause: 커넥터 코드가 다른 파일로 이동(리로케이션)
+    promoted_to_this_run: true             # ③ 이번 확인 항목으로 승격
+verdict: pass</pre><span class="use2"><b>어떻게 쓰나</b> — 검사기가 자동으로 남긴다. ‘직전에 무엇이 돌았고 무엇이 왜 실패했으며, 그 원인을 이번에 어떻게 막았는지’가 한 파일에 남아 다음 버전 올림의 근거가 된다.</span></div></details>
+    </div>
+    <div class="callout good"><span class="lbl">채택 방침</span>A·C = LLM이 초안 생성(사람 확인) · B·D = 사람·조직이 고정 · E = 검사기 자동 생성. → LLM의 속도는 쓰되, <b>기록은 자유서술 MD가 아니라 이 구조화 파일로</b> 남겨 검사기가 검증한다.</div>
+    <div class="callout"><span class="lbl">1차 검토 요약</span>제외한 것은 <b>지우지 않고 삭선으로 남겨</b> 왜 뺐는지까지 보이게 했다. 핵심 변경 두 가지 — ① <b>‘빼보기’(일부러 기능을 빼서 검사가 실패하는지 보는 것)를 빼고</b>, 대신 <b>직전 버전의 테스트 기록을 확인</b>한다(모두 수행됐나 · 실패했다면 원인은 무엇이었나 → 같은 오류 재발 방지). ② <b>우리 스스로를 제한하는 정책은 덜어내고</b>, 진짜 위험한 구역 차단만 남긴다.</div>
+  </div></section>
+
+  <section class="slide"><div class="wrap">
+    <div class="eyebrow"><span class="sn">S14 / 16</span> · 자유서술 MD가 아니라 관리파일로</div>
+    <h2>‘자유서술 MD 자기보고’가 아니라 ‘관리파일 + 검사기’</h2>
+    <p class="lede">8/5 방식은 LLM이 <b>자유서술 MD(KB-CUSTOM-*.md)에 “했다”고 적는 자기보고</b>. 우리는 앞의 <b>구조화 관리파일(S13)</b>을 검사기가 대조한다 — 문서는 안 해보고/고쳐도 티가 안 나지만, 관리파일+검사기는 형식이 정해져 기계가 검증하고 <b>보호된 CI에서 생성·보관하면 변경을 감지</b>한다. 아래는 그 대비의 대표 예시 4개.</p>
     <div class="cmp">
       <div class="cmp-row"><div>LLM의 주장</div><div>문서(MD)만: 위험</div><div>검사기가 하는 것</div></div>
       <div class="cmp-row"><div class="claim">“이 파일 바꿨다”</div><div class="risk">말만 믿게 됨</div><div class="fix">실제 커밋 변경을 <b>직접 대조</b></div></div>
@@ -320,7 +446,7 @@ allowed_changed_paths:          <span class="cm"># 건드려도 되는 경로 ~5
   </div></section>
 
   <section class="slide"><div class="wrap">
-    <div class="eyebrow"><span class="sn">S14 / 15</span> · 오해 방지</div>
+    <div class="eyebrow"><span class="sn">S15 / 16</span> · 오해 방지</div>
     <h2>지켜야 할 조건 &amp; 검사기의 정확한 위치</h2>
     <div class="rows">
       <div class="row b-red"><span class="k">독립성</span><p>LLM이 실행·기록·증거·승인을 다 하면 ‘독립 검증’이 아니다. <span class="sub">별도의 보호된 자동화(CI)가 실제 코드를 받아 검사를 돌려야 한다 — LLM은 요약만, 판정은 못 바꾼다.</span></p></div>
@@ -330,7 +456,7 @@ allowed_changed_paths:          <span class="cm"># 건드려도 되는 경로 ~5
   </div></section>
 
   <section class="slide"><div class="wrap">
-    <div class="eyebrow"><span class="sn">S15 / 15</span> · 한 장 요약</div>
+    <div class="eyebrow"><span class="sn">S16 / 16</span> · 한 장 요약</div>
     <h2>결론</h2>
     <div class="rows">
       <div class="row flat b-green"><span class="k">작은 변화</span><p><span style="color:var(--faint)">(4·7p)</span> 하위 패치엔 <b>규칙 기반이 그대로 유효</b> — 충돌 0·자동 병합.</p></div>
