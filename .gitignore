@@ -1,0 +1,10 @@
+# The two product/harness repos are managed as their own git clones
+repos/
+
+# Build & runtime artifacts
+logs/
+**/target/
+**/node_modules/
+docker-volume/
+docker-volumes/
+*.tar.gz
