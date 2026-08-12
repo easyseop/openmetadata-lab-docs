@@ -371,35 +371,7 @@ finally: client.delete(...)                          <span class="cm"># 흔적 �
   </div></section>
 
   <section class="slide"><div class="wrap">
-    <div class="eyebrow"><span class="sn">S09 / 17</span> · 참고한 다른 접근</div>
-    <h2>8/5 공유된 ‘LLM 기반 운영 방식’ (참고)</h2>
-    <div class="rows">
-      <div class="row b-blue"><span class="k">개념</span><p>규칙·지식 문서·자동화로 LLM이 버전 포팅을 빠르게 수행하는 방식. <span class="sub">“포팅 시간 크게 단축(빠르고 체계적)”은 그 방식의 <b>자체 보고 수치</b> — 우리가 실행·검증한 건 아니다.</span></p></div>
-      <div class="row b-blue"><span class="k">구조</span><p>변경·수정·테스트·결과 기록을 대부분 LLM이 스스로 수행하고, 그 결과도 스스로 문서에 적는다.</p></div>
-    </div>
-    <div class="callout good"><span class="lbl">우리 생각 — 검증이 아니라 방향 제안</span>이 접근에 검사기로 ‘각 판단의 근거를 자동으로 뒷받침’하는 층을 더하면, <b>속도(LLM)는 살리고 신뢰(근거)는 끌어올릴 수 있겠다.</b> 경쟁이 아니라 ‘빠른 실행 + 단단한 근거’로 합쳐진다.</div>
-  </div></section>
-
-  <section class="slide"><div class="wrap">
-    <div class="eyebrow"><span class="sn">S10 / 17</span> · 방향 전환</div>
-    <h2>LLM이 일하고, 검사기가 근거를 붙인다</h2>
-    <div class="two">
-      <div class="row b-blue"><span class="k">LLM</span><p><b>판단·제안</b><span class="sub">무엇을 바꿀지, 코드가 어디로 옮겨졌을지, 충돌 해결, 필요한 테스트.</span></p></div>
-      <div class="row b-teal"><span class="k">검사기</span><p><b>뒷받침</b><span class="sub">그 판단을 실제 코드·실행 증거로 확인하고, 위험하면 막는다.</span></p></div>
-    </div>
-    <p class="note" style="margin-top:10px">▸ <b>구체적으로 — LLM의 주장을 검사기가 이렇게 확인한다</b></p>
-    <div class="rows">
-      <div class="row b-teal"><span class="k">“이 파일 바꿨다”</span><p>실제 커밋의 변경 내역을 <b>직접 대조</b>한다.</p></div>
-      <div class="row b-teal"><span class="k">“충돌 0건”</span><p><b>임시로 실제 병합해 충돌 수를 센다.</b> <span class="sub">안 해보고 적어도 티가 안 나는 주장이라, 세어보는 것 말고는 확인할 방법이 없다.</span></p></div>
-      <div class="row b-teal"><span class="k">“테스트 통과”</span><p>실제 서버에서 <b>다시 실행</b>한다. <span class="sub">미실행은 통과가 아니다.</span></p></div>
-      <div class="row b-teal"><span class="k">“승인함”</span><p>승인을 결과에 묶어 <b>입력이 바뀌면 자동으로 무효</b>가 되게 한다.</p></div>
-    </div>
-    <div class="callout"><span class="lbl">핵심 규칙</span>LLM이 ‘됐다(✅)’고 적어도, 실제 코드·실행 증거가 없으면 <b>‘미확인’</b>으로 표시한다. 증거 없다고 곧장 ‘거짓’으로 몰지 않는다 →
-      <span class="tag t-green">확인</span> <span class="tag t-red">반박</span> <span class="tag t-amber">미확인</span> <span class="tag t-blue">사람검토</span> 4단계.</div>
-  </div></section>
-
-  <section class="slide"><div class="wrap">
-    <div class="eyebrow"><span class="sn">S11 / 17</span> · 도입 제안 ① — 검증되는 과정</div>
+    <div class="eyebrow"><span class="sn">S09 / 17</span> · 도입 제안 ① — 검증되는 과정</div>
     <h2>커스텀 하나(BANK-OM ID)가 검증되는 과정</h2>
     <p class="lede"><b>제안:</b> 하이브리드에서 LLM 작업의 ‘증거 층’으로 <b>이 검사기를 도입</b>한다 (자랑이 아니라 도입 대상). 커스텀 하나가 아래 <b>6단계</b>로 등록·검사·증거화된다.</p>
     <div class="flow">
@@ -414,7 +386,7 @@ finally: client.delete(...)                          <span class="cm"># 흔적 �
   </div></section>
 
   <section class="slide"><div class="wrap">
-    <div class="eyebrow"><span class="sn">S12 / 17</span> · 도입 제안 ② — LLM이 만든다</div>
+    <div class="eyebrow"><span class="sn">S10 / 17</span> · 도입 제안 ② — LLM이 만든다</div>
     <h2>LLM이 만들고, 사람이 확인한다 <span style="font-weight:400;color:var(--muted);font-size:.6em">관리 파일 9종</span></h2>
     <p class="lede">6페이지에서 말한 <b>“관리할 파일이 너무 많다”</b>는 부담의 정체가 바로 이 9종이다. 없애는 게 아니라 <b>작성·갱신을 LLM에게 넘긴다</b> — 사람은 확인만, 검사기는 판정만 한다.</p>
     <p class="note" style="margin-top:2px">▸ <b>1차 검토</b> <span class="sub">(이 장부터 3장에 걸친 <b>전체 18종</b> 기준)</span> — <span class="mf-badge keep">채택</span> 8 · <span class="mf-badge cut">제외</span> 3(삭선·흐림, 지우지 않고 남김) · <span class="mf-badge hold">보류</span> 5 · <span class="mf-badge new">신규</span> 2 제안 &nbsp;·&nbsp; 각 카드를 펼치면 <b>용도 · 실제 예시 · 검사기 사용법 · LLM 체제에서의 역할</b>이 나옵니다.</p>
@@ -485,7 +457,7 @@ regression_guard_from_failures: true      # ③ 그 원인을 이번 테스트�
   </div></section>
 
   <section class="slide"><div class="wrap">
-    <div class="eyebrow"><span class="sn">S13 / 17</span> · 도입 제안 ③ — LLM이 못 바꾼다</div>
+    <div class="eyebrow"><span class="sn">S11 / 17</span> · 도입 제안 ③ — LLM이 못 바꾼다</div>
     <h2>사람이 정하고, LLM이 못 바꾼다 <span style="font-weight:400;color:var(--muted);font-size:.6em">관리 파일 5종</span></h2>
     <p class="lede">LLM에게 일을 맡기려면 <b>그 반대편에 고정된 것</b>이 있어야 한다. 이 5종은 <b>LLM이 고칠 수 없는 영역</b>이다 — 늘 같은 결과를 내고, 승인으로도 뒤집히지 않는다.</p>
     <p class="note" style="margin-top:2px">▸ 이번 검토에서 <b>3종을 덜어냈다</b> — 우리 스스로를 제한하는 정책은 빼고, <b>진짜 위험한 구역 차단만</b> 남긴다.</p>
@@ -518,7 +490,7 @@ candidate_lock_digest: sha256:...   # 내용 바뀌면 승인 자동 무효</pre
   </div></section>
 
   <section class="slide"><div class="wrap">
-    <div class="eyebrow"><span class="sn">S14 / 17</span> · 도입 제안 ④ — 검사기가 남긴다</div>
+    <div class="eyebrow"><span class="sn">S12 / 17</span> · 도입 제안 ④ — 검사기가 남긴다</div>
     <h2>검사기가 자동으로 남긴다 <span style="font-weight:400;color:var(--muted);font-size:.6em">관리 파일 4종</span></h2>
     <p class="lede">사람도 LLM도 쓰지 않는다. <b>검사기가 실행하고 그 결과를 남긴다.</b> LLM이 “했습니다”라고 적었을 때 <b>대조할 원본</b>이 되는 것들이다.</p>
     <p class="note" style="margin-top:2px">▸ 관리 부담이 <b>원래 0</b>인 영역이다 — 만드는 주체가 사람이 아니기 때문.</p>
@@ -553,7 +525,7 @@ verdict: pass</pre><span class="use2"><b>어떻게 쓰나</b> — 검사기가 �
   </div></section>
 
   <section class="slide"><div class="wrap">
-    <div class="eyebrow"><span class="sn">S15 / 17</span> · 도입 제안 마무리</div>
+    <div class="eyebrow"><span class="sn">S13 / 17</span> · 도입 제안 마무리</div>
     <h2>그래서 빨라지나 — 시간이 어디서 늘고 줄나</h2>
     <p class="lede">이 질문에 <b>“무조건 빨라진다”고 답하지 않는다.</b> 관리 파일을 전부 유지한 채 LLM까지 얹으면 <b>오히려 두 배로 느려진다</b> — 이번 1차 검토에서 덜어낸 이유가 바로 이것이다.</p>
 
@@ -580,7 +552,7 @@ verdict: pass</pre><span class="use2"><b>어떻게 쓰나</b> — 검사기가 �
   </div></section>
 
           <section class="slide"><div class="wrap">
-    <div class="eyebrow"><span class="sn">S16 / 17</span> · 오해 방지</div>
+    <div class="eyebrow"><span class="sn">S14 / 17</span> · 오해 방지</div>
     <h2>검사기의 정확한 위치 — LLM 위에 얹는 안전장치</h2>
     <p class="lede">검사기는 <b>LLM을 대신하지 않는다.</b> 검사도 판단도 <b>LLM이 먼저 한다</b> — 검사기는 그 결과를 <b>한 번 더 확인</b>할 뿐이다. 그것도 <b>LLM이 스스로 확인할 수 없는 것만</b> 본다.</p>
     <div class="rows">
@@ -592,18 +564,46 @@ verdict: pass</pre><span class="use2"><b>어떻게 쓰나</b> — 검사기가 �
   </div></section>
 
   <section class="slide"><div class="wrap">
-    <div class="eyebrow"><span class="sn">S17 / 17</span> · 한 장 요약</div>
+    <div class="eyebrow"><span class="sn">S15 / 17</span> · 한 장 요약</div>
     <h2>결론</h2>
     <div class="rows">
       <div class="row flat b-green"><span class="k">작은 변화</span><p><span style="color:var(--faint)">(4·5p)</span> 하위 패치엔 <b>규칙 기반이 그대로 유효</b> — 충돌 0·자동 병합.</p></div>
       <div class="row flat b-red"><span class="k">큰 변화</span><p><span style="color:var(--faint)">(4·5p)</span> 1.13.2처럼 구조가 바뀌면 <b>오판(리로케이션)</b> + <b>관리 파일 ~25개 운영 부담</b><span style="color:var(--faint)">(6p)</span> → 한계.</p></div>
-      <div class="row b-blue"><span class="k">그래서</span><p><span style="color:var(--faint)">(10·11p)</span> 규칙 기반은 버리지 않는다. <b>예측 가능 범위엔 그대로</b>, 불확실할 때만 하이브리드 — 그 관리 산출물은 <b>LLM이 만들고 검사기는 검증만</b>.</p></div>
+      <div class="row b-blue"><span class="k">그래서</span><p><span style="color:var(--faint)">(9p)</span> 규칙 기반은 버리지 않는다. <b>예측 가능 범위엔 그대로</b>, 불확실할 때만 하이브리드 — 그 관리 산출물은 <b>LLM이 만들고 검사기는 검증만</b>.</p></div>
     </div>
     <div class="two" style="margin-top:12px">
       <div class="row b-teal"><span class="k">① 방식 통제</span><p><b>어떻게 일을 하는지를 지시(프롬프트·MD)로 통제</b>한다 (순서·범위·남길 것). <span class="sub">4페이지 ①</span></p></div>
       <div class="row b-green"><span class="k">② 결과 통제</span><p>과정마다 <b>정해진 형식으로 결과를 뱉게 강제</b> → 검사기가 판정. <span class="sub">4페이지 ②</span></p></div>
     </div>
     <div class="callout good"><span class="lbl">한 줄 &nbsp;(harness = 고삐)</span>업그레이드가 불확실해도 <b>산출물을 예측 가능하게 만들어 통제</b>한다 — AI를 덜 쓰는(minimize) 게 아니라 <b>고삐를 채우는(harness)</b> 것. <span style="color:var(--muted);font-weight:400">&nbsp; 현재: 1.13.1 9/9 · 1.13.2 부분 / 다음: 주장–증거 자동 대조기.</span></div>
+  </div></section>
+
+  <section class="slide"><div class="wrap">
+    <div class="eyebrow"><span class="sn">S16 / 17</span> · 부록 A — 참고한 다른 접근</div>
+    <h2>8/5 공유된 ‘LLM 기반 운영 방식’ (참고)</h2>
+    <div class="rows">
+      <div class="row b-blue"><span class="k">개념</span><p>규칙·지식 문서·자동화로 LLM이 버전 포팅을 빠르게 수행하는 방식. <span class="sub">“포팅 시간 크게 단축(빠르고 체계적)”은 그 방식의 <b>자체 보고 수치</b> — 우리가 실행·검증한 건 아니다.</span></p></div>
+      <div class="row b-blue"><span class="k">구조</span><p>변경·수정·테스트·결과 기록을 대부분 LLM이 스스로 수행하고, 그 결과도 스스로 문서에 적는다.</p></div>
+    </div>
+    <div class="callout good"><span class="lbl">우리 생각 — 검증이 아니라 방향 제안</span>이 접근에 검사기로 ‘각 판단의 근거를 자동으로 뒷받침’하는 층을 더하면, <b>속도(LLM)는 살리고 신뢰(근거)는 끌어올릴 수 있겠다.</b> 경쟁이 아니라 ‘빠른 실행 + 단단한 근거’로 합쳐진다.</div>
+  </div></section>
+
+  <section class="slide"><div class="wrap">
+    <div class="eyebrow"><span class="sn">S17 / 17</span> · 부록 B — 방향 전환</div>
+    <h2>LLM이 일하고, 검사기가 근거를 붙인다</h2>
+    <div class="two">
+      <div class="row b-blue"><span class="k">LLM</span><p><b>판단·제안</b><span class="sub">무엇을 바꿀지, 코드가 어디로 옮겨졌을지, 충돌 해결, 필요한 테스트.</span></p></div>
+      <div class="row b-teal"><span class="k">검사기</span><p><b>뒷받침</b><span class="sub">그 판단을 실제 코드·실행 증거로 확인하고, 위험하면 막는다.</span></p></div>
+    </div>
+    <p class="note" style="margin-top:10px">▸ <b>구체적으로 — LLM의 주장을 검사기가 이렇게 확인한다</b></p>
+    <div class="rows">
+      <div class="row b-teal"><span class="k">“이 파일 바꿨다”</span><p>실제 커밋의 변경 내역을 <b>직접 대조</b>한다.</p></div>
+      <div class="row b-teal"><span class="k">“충돌 0건”</span><p><b>임시로 실제 병합해 충돌 수를 센다.</b> <span class="sub">안 해보고 적어도 티가 안 나는 주장이라, 세어보는 것 말고는 확인할 방법이 없다.</span></p></div>
+      <div class="row b-teal"><span class="k">“테스트 통과”</span><p>실제 서버에서 <b>다시 실행</b>한다. <span class="sub">미실행은 통과가 아니다.</span></p></div>
+      <div class="row b-teal"><span class="k">“승인함”</span><p>승인을 결과에 묶어 <b>입력이 바뀌면 자동으로 무효</b>가 되게 한다.</p></div>
+    </div>
+    <div class="callout"><span class="lbl">핵심 규칙</span>LLM이 ‘됐다(✅)’고 적어도, 실제 코드·실행 증거가 없으면 <b>‘미확인’</b>으로 표시한다. 증거 없다고 곧장 ‘거짓’으로 몰지 않는다 →
+      <span class="tag t-green">확인</span> <span class="tag t-red">반박</span> <span class="tag t-amber">미확인</span> <span class="tag t-blue">사람검토</span> 4단계.</div>
   </div></section>
 
 </main>
