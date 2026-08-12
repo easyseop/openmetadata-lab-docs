@@ -246,7 +246,13 @@ allowed_changed_paths:          <span class="cm"># 건드려도 되는 경로 ~5
       <div class="row b-red"><span class="k">③ 등록할 경로가 많다</span><p>검사기에게 <b>“우리 커스텀이 여기 있다”고 경로를 전부 등록</b>해야 한다. <b>Sybase 하나에 18개</b> — 그중 <b>11개가 프로그램이 자동으로 만들어내는 파일</b>이라, 다시 만들어질 때마다 내용이 통째로 바뀐다. <span class="sub">등록해둔 경로가 계속 어긋나고, 기능이 늘수록 곱절로 늘어난다.</span></p></div>
       <div class="row b-red"><span class="k">④ 관리 부담</span><p>그때마다 <b>관리 파일 ~25개와 커밋 이력을 사람이 갱신</b>해야 한다. <span class="sub">고칠수록 따라 붙는 일이 늘어난다.</span></p></div>
     </div>
-    <div class="callout"><span class="lbl">그래서</span>여기서 <b>“그럼 검사기를 안 쓰면 되지 않나”는 답이 아니다.</b> 이게 없으면 <b>“됐다”는 말을 믿는 수밖에 없다</b>(다음 장). <b>문제는 검사기가 아니라, 규칙만으로 전부 판정하려 한 방식이다</b> — 미리 알 수 없는 변경은 계속 생기는데, 규칙은 그때마다 <b>사람이 손으로 따라가야</b> 한다. → 그래서 <b>버리는 게 아니라 역할을 바꾼다.</b> 유연한 판단은 <b>LLM에게 넘기고</b>, 검사기는 <b>그 결과를 확인하는 자리</b>로 옮긴다.</div>
+    <div class="callout"><span class="lbl">그래서 내린 판단</span>처음의 <b>규칙 기반 · AI 최소화</b> 전략은 —
+      <ol class="mini" style="color:inherit">
+        <li><b>정해진 틀 안에서는 잘 통했다</b> <span class="cm">— 1.13.0→1.13.1은 충돌 0으로 깔끔히 통과</span></li>
+        <li><b>돌발 상황에는 유연하지 못했다</b> <span class="cm">— 규칙은 미리 정해둔 것만 보므로, 예상 못 한 변경이 오면 사람이 손으로 따라가야 한다</span></li>
+        <li><b>유지 비용이 컸다</b> <span class="cm">— 그때마다 등록 경로와 관리 파일을 다시 맞춰야 한다</span></li>
+      </ol>
+      → <b>지속 가능한 운영이 어렵다</b>고 판단했다. 그래서 <b>기본 운영 구조를 LLM으로 옮기되, 통제는 놓지 않는다</b> — 규칙으로 못 박던 것을 <b>① 같은 효과를 내는 지시(프롬프트·MD)</b>로 주고, <b>② 과정마다 정해진 형식으로 결과를 받는다.</b> <span class="sub">자유서술로 “했다”고 적게 두지 않는다는 뜻. <b>결국 하네스 방식이 필요하다는 걸 다시 확인한 셈이다</b> — 16페이지.</span></div>
   </div></section>
 
   <section class="slide"><div class="wrap">
@@ -585,8 +591,11 @@ verdict: pass</pre><span class="use2"><b>어떻게 쓰나</b> — 검사기가 �
       <div class="row b-blue"><span class="k">그래서</span><p><span style="color:var(--faint)">(9·10p)</span> 규칙 기반은 버리지 않는다. <b>예측 가능 범위엔 그대로</b>, 불확실할 때만 하이브리드 — 그 관리 산출물은 <b>LLM이 만들고 검사기는 검증만</b>.</p></div>
     </div>
     <div class="two" style="margin-top:12px">
-      <div class="row b-teal"><span class="k">① 방식 통제</span><p>AI가 <b>일하는 방식</b>을 하네스로 (브랜치·커밋·범위).</p></div>
-      <div class="row b-green"><span class="k">② 결과 통제</span><p>AI가 <b>결과를 예측 가능한 형태로 뱉게 강제</b> → 검사기가 판정.</p></div>
+      <div class="row b-teal"><span class="k">① 방식 통제</span><p>규칙으로 못 박던 것을 <b>지시(프롬프트·MD)로 옮겨</b> AI가 <b>일하는 방식</b>을 통제 (브랜치·커밋·범위). <span class="sub">4페이지 ①</span></p></div>
+      <div class="row b-green"><span class="k">② 결과 통제</span><p>과정마다 <b>정해진 형식으로 결과를 뱉게 강제</b> → 검사기가 판정. <span class="sub">4페이지 ②</span></p></div>
+    </div>
+    <div class="rows" style="margin-top:11px">
+      <div class="row b-blue"><span class="k">③ 최종 목표</span><p>①②를 <b>과정 단위로 굳혀 ‘스킬’(정해진 작업 절차)로 만들고</b>, 그걸 묶어 <b>OpenMetadata 운영 하네스 템플릿</b>을 갖추는 것. <span class="sub">버전업 때마다 새로 짜는 게 아니라 <b>템플릿을 꺼내 쓰는</b> 상태 — 다음 버전에도, 다른 시스템에도 같은 절차가 돈다. <b>아직 만들지 않았다.</b></span></p></div>
     </div>
     <div class="callout good"><span class="lbl">한 줄 &nbsp;(harness = 고삐)</span>업그레이드가 불확실해도 <b>산출물을 예측 가능하게 만들어 통제</b>한다 — AI를 덜 쓰는(minimize) 게 아니라 <b>고삐를 채우는(harness)</b> 것. <span style="color:var(--muted);font-weight:400">&nbsp; 현재: 1.13.1 9/9 · 1.13.2 부분 / 다음: 주장–증거 자동 대조기.</span></div>
   </div></section>
