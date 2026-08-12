@@ -246,17 +246,32 @@ allowed_changed_paths:          <span class="cm"># 건드려도 되는 경로 ~5
       <div class="row b-red"><span class="k">③ 등록할 경로가 많다</span><p>검사기에게 <b>“우리 커스텀이 여기 있다”고 경로를 전부 등록</b>해야 한다. <b>Sybase 하나에 18개</b> — 그중 <b>11개가 프로그램이 자동으로 만들어내는 파일</b>이라, 다시 만들어질 때마다 내용이 통째로 바뀐다. <span class="sub">등록해둔 경로가 계속 어긋나고, 기능이 늘수록 곱절로 늘어난다.</span></p></div>
       <div class="row b-red"><span class="k">④ 관리 부담</span><p>그때마다 <b>관리 파일 ~25개와 커밋 이력을 사람이 갱신</b>해야 한다. <span class="sub">고칠수록 따라 붙는 일이 늘어난다.</span></p></div>
     </div>
-    <div class="callout"><span class="lbl">그래서 내린 판단</span>처음의 <b>규칙 기반 · AI 최소화</b> 전략은 —
-      <ol class="mini" style="color:inherit">
-        <li><b>정해진 틀 안에서는 잘 통했다</b> <span class="cm">— 1.13.0→1.13.1은 충돌 0으로 깔끔히 통과</span></li>
-        <li><b>돌발 상황에는 유연하지 못했다</b> <span class="cm">— 규칙은 미리 정해둔 것만 보므로, 예상 못 한 변경이 오면 사람이 손으로 따라가야 한다</span></li>
-        <li><b>유지 비용이 컸다</b> <span class="cm">— 그때마다 등록 경로와 관리 파일을 다시 맞춰야 한다</span></li>
-      </ol>
-      → <b>지속 가능한 운영이 어렵다</b>고 판단했다. 그래서 <b>기본 운영 구조를 LLM으로 옮기되, 통제는 놓지 않는다</b> — 규칙으로 못 박던 것을 <b>① 같은 효과를 내는 지시(프롬프트·MD)</b>로 주고, <b>② 과정마다 정해진 형식으로 결과를 받는다.</b> <span class="sub">자유서술로 “했다”고 적게 두지 않는다는 뜻. <b>결국 하네스 방식이 필요하다는 걸 다시 확인한 셈이다</b> — 16페이지.</span></div>
   </div></section>
 
   <section class="slide"><div class="wrap">
-    <div class="eyebrow"><span class="sn">S05 / 16</span> · 왜 ‘룰베이스 검사기’인가</div>
+    <div class="eyebrow"><span class="sn">S05 / 16</span> · 드러난 한계 ① — 규칙 검사의 사각</div>
+    <h2>규칙 검사만으로는 못 보는 것들</h2>
+    <div class="rows">
+      <div class="row b-red"><span class="k">이동(리로케이션)</span><p>공식이 코드를 다른 파일로 옮기면 못 따라간다 (가장 큰 약점). <span class="sub">실제: Sybase의 <code>case DatabaseServiceType.Sybase</code> 코드가 <code>DatabaseServiceUtils.tsx</code> → <code>*PureUtils.ts</code>로 이사. 검사기는 매니페스트의 옛 경로만 봐서 “커스텀이 사라졌다”며 실패(BLOCK). 실제론 새 파일에 멀쩡히 살아있었음 = 오판.</span></p></div>
+      <div class="row b-red"><span class="k">의미(반쪽 병합)</span><p>검사기의 ‘생존’ 판정 기준은 <b>“커스텀 파일이 공식과 다른가”</b>다. 그런데 <b>“다르다” ≠ “기능이 온전하다”</b>. <span class="sub">병합이 어긋나 커스텀 로직이 <b>반쪽만</b> 들어가도 ‘공식과 다름’은 성립 → survived(통과)로 봐버림. (또 DB 마이그레이션이 어긋나 <b>서버가 아예 안 뜬</b> 적도 있음 — 파일은 멀쩡한데 런타임이 깨진 경우. 경로만 보는 검사론 못 잡음.)</span></p></div>
+      <div class="row b-red"><span class="k">입력(사람 값)</span><p>일부 판단 근거를 사람이 손으로 적는다. <span class="sub">실제: 충돌률·승인자 같은 값은 사람이 입력 → 검사기는 그 숫자가 ‘진짜인지’는 확인 못 함(형식만 검사).</span></p></div>
+    </div>
+    <div class="callout"><span class="lbl">결론</span>규칙(파일·글자 기준)을 더 붙여도 이 약점은 반복된다 — 구조적 한계다. <span style="font-weight:400;color:var(--muted)">단, 이건 <b>변화가 클 때</b> 얘기다 — 작은 버전업에선 규칙 기반이 잘 통했다.</span></div>
+  </div></section>
+
+  <section class="slide"><div class="wrap">
+    <div class="eyebrow"><span class="sn">S06 / 16</span> · 드러난 한계 ② — 지속 가능 운영</div>
+    <h2>지속 가능 운영의 한계 — 관리할 파일이 너무 많다</h2>
+    <div class="rows">
+      <div class="row b-red"><span class="k">부담</span><p>무엇을 바꿨는지·어디까지 허용인지·누가 승인했는지를 전부 사람이 파일로 관리한다.</p></div>
+      <div class="row b-red"><span class="k">반복</span><p>버전업 때마다 이 목록들을 일일이 갱신해야 한다.</p></div>
+      <div class="row b-amber"><span class="k">본질</span><p>‘검사 자체’보다 <b>‘검사를 유지하는 비용’이 더 크다</b> — 지속 운영의 벽.</p></div>
+      <div class="row b-amber"><span class="k">위험</span><p>목록이 늘수록 갱신 누락·중복 검사·피로로 인한 형식적 승인 위험이 커진다.</p></div>
+    </div>
+  </div></section>
+
+  <section class="slide"><div class="wrap">
+    <div class="eyebrow"><span class="sn">S07 / 16</span> · 왜 ‘룰베이스 검사기’인가</div>
     <h2>강점 — LLM 혼자선 보장 못 하는 것들</h2>
     <p class="lede">아래는 전부 <b>LLM도 할 수 있는 일</b>이다. 차이는 능력이 아니라 <b>누가 증언하느냐</b>에 있다 — <b>LLM이 하면 LLM의 말</b>이 되고, <b>검사기가 하면 증거</b>가 된다.</p>
     <div class="rows">
@@ -340,28 +355,6 @@ finally: client.delete(...)                          <span class="cm"># 흔적 �
   </div></section>
 
   <section class="slide"><div class="wrap">
-    <div class="eyebrow"><span class="sn">S06 / 16</span> · 드러난 한계 ① — 지속 가능 운영</div>
-    <h2>지속 가능 운영의 한계 — 관리할 파일이 너무 많다</h2>
-    <div class="rows">
-      <div class="row b-red"><span class="k">부담</span><p>무엇을 바꿨는지·어디까지 허용인지·누가 승인했는지를 전부 사람이 파일로 관리한다.</p></div>
-      <div class="row b-red"><span class="k">반복</span><p>버전업 때마다 이 목록들을 일일이 갱신해야 한다.</p></div>
-      <div class="row b-amber"><span class="k">본질</span><p>‘검사 자체’보다 <b>‘검사를 유지하는 비용’이 더 크다</b> — 지속 운영의 벽.</p></div>
-      <div class="row b-amber"><span class="k">위험</span><p>목록이 늘수록 갱신 누락·중복 검사·피로로 인한 형식적 승인 위험이 커진다.</p></div>
-    </div>
-  </div></section>
-
-  <section class="slide"><div class="wrap">
-    <div class="eyebrow"><span class="sn">S07 / 16</span> · 드러난 한계 ②</div>
-    <h2>규칙 검사만으로는 못 보는 것들</h2>
-    <div class="rows">
-      <div class="row b-red"><span class="k">이동(리로케이션)</span><p>공식이 코드를 다른 파일로 옮기면 못 따라간다 (가장 큰 약점). <span class="sub">실제: Sybase의 <code>case DatabaseServiceType.Sybase</code> 코드가 <code>DatabaseServiceUtils.tsx</code> → <code>*PureUtils.ts</code>로 이사. 검사기는 매니페스트의 옛 경로만 봐서 “커스텀이 사라졌다”며 실패(BLOCK). 실제론 새 파일에 멀쩡히 살아있었음 = 오판.</span></p></div>
-      <div class="row b-red"><span class="k">의미(반쪽 병합)</span><p>검사기의 ‘생존’ 판정 기준은 <b>“커스텀 파일이 공식과 다른가”</b>다. 그런데 <b>“다르다” ≠ “기능이 온전하다”</b>. <span class="sub">병합이 어긋나 커스텀 로직이 <b>반쪽만</b> 들어가도 ‘공식과 다름’은 성립 → survived(통과)로 봐버림. (또 DB 마이그레이션이 어긋나 <b>서버가 아예 안 뜬</b> 적도 있음 — 파일은 멀쩡한데 런타임이 깨진 경우. 경로만 보는 검사론 못 잡음.)</span></p></div>
-      <div class="row b-red"><span class="k">입력(사람 값)</span><p>일부 판단 근거를 사람이 손으로 적는다. <span class="sub">실제: 충돌률·승인자 같은 값은 사람이 입력 → 검사기는 그 숫자가 ‘진짜인지’는 확인 못 함(형식만 검사).</span></p></div>
-    </div>
-    <div class="callout"><span class="lbl">결론</span>규칙(파일·글자 기준)을 더 붙여도 이 약점은 반복된다 — 구조적 한계다. <span style="font-weight:400;color:var(--muted)">단, 이건 <b>변화가 클 때</b> 얘기다 — 작은 버전업에선 규칙 기반이 잘 통했다.</span></div>
-  </div></section>
-
-  <section class="slide"><div class="wrap">
     <div class="eyebrow"><span class="sn">S08 / 16</span> · 참고한 다른 접근</div>
     <h2>8/5 공유된 ‘LLM 기반 운영 방식’ (참고)</h2>
     <div class="rows">
@@ -435,7 +428,7 @@ assurance: { contracts: [CONTRACT-SYBASE-CONNECTOR] }</pre><span class="use2"><b
       <details class="mf"><summary><span class="fn">contracts.yaml</span><span class="use">지켜야 할 약속 + 확인 테스트</span><span class="mf-badge keep">채택</span></summary><div class="mbody"><b>무슨 파일</b> — 각 기능이 ‘이건 꼭 지켜져야 한다’는 약속과, 그 약속을 확인하는 테스트 목록.<pre>- id: CONTRACT-INSTANCE-CODE
   invariant: codeGroup/codeValue가 CRUD·재색인 뒤에도 동일 조회
   required_tests: [test_instance_code.py::test_crud_search_roundtrip]
-  customization_ids: [BANK-OM-001, ...]</pre><span class="use2"><b>어떻게 쓰나</b> — 기능마다 그 약속을 지키는 테스트가 하나라도 연결돼 있고, 그 테스트가 실제로 있고 돌아가는지 확인(빈 껍데기면 실패 처리).</span><span class="use2 llm"><b>LLM 체제에서</b> — <b>여기가 사람과 LLM의 경계선</b>이다. <b>“무엇을 지켜야 하는가”(<code>invariant</code>)는 사람이 문장으로 확인</b>하고, <b>“그걸 어떻게 확인하는가”(테스트 코드)는 LLM이 짠다.</b> 테스트 코드 수백 줄을 읽는 대신 <b>한 문장만 검토</b>하면 되므로 — 사람이 안 봐도 되는 게 아니라 <b>볼 양이 압축</b>된다. <span class="cm">※ 빼보기는 ‘아무것도 안 보는 테스트’만 걸러내므로(5p), <b>불변식이 촘촘해야 ‘덜 보는 테스트’까지 막힌다.</b></span></span></div></details>
+  customization_ids: [BANK-OM-001, ...]</pre><span class="use2"><b>어떻게 쓰나</b> — 기능마다 그 약속을 지키는 테스트가 하나라도 연결돼 있고, 그 테스트가 실제로 있고 돌아가는지 확인(빈 껍데기면 실패 처리).</span><span class="use2 llm"><b>LLM 체제에서</b> — <b>여기가 사람과 LLM의 경계선</b>이다. <b>“무엇을 지켜야 하는가”(<code>invariant</code>)는 사람이 문장으로 확인</b>하고, <b>“그걸 어떻게 확인하는가”(테스트 코드)는 LLM이 짠다.</b> 테스트 코드 수백 줄을 읽는 대신 <b>한 문장만 검토</b>하면 되므로 — 사람이 안 봐도 되는 게 아니라 <b>볼 양이 압축</b>된다. <span class="cm">※ 빼보기는 ‘아무것도 안 보는 테스트’만 걸러내므로(7p), <b>불변식이 촘촘해야 ‘덜 보는 테스트’까지 막힌다.</b></span></span></div></details>
       <details class="mf"><summary><span class="fn">shared-path-owners.yaml</span><span class="use">공유 파일의 기능별 지분(37개)</span><span class="mf-badge keep">채택</span></summary><div class="mbody"><b>무슨 파일</b> — 한 파일을 여러 기능이 같이 고칠 때, 그 파일의 어느 부분이 어느 기능 몫인지 적어둔 ‘지분표’(공유 파일 37개).<pre>.../databaseService.json: [BANK-OM-006, BANK-OM-007]   # Sybase, Tibero
 .../AuthenticatedAppRouter.tsx: [BANK-OM-001, 002, 003]  # 3개 화면·경로
 .../locale/ko-kr.json: [BANK-OM-001..004]               # 뜻 있는 문구 추가</pre><span class="use2"><b>어떻게 쓰나</b> — 그 공유 파일에서 ‘각 기능 몫의 코드가 그대로 살아있나’를 기능별로 확인(다국어 파일은 ‘뜻 있는 문구 추가’만 지분으로 보고, 줄맞춤 변경은 무시).</span><span class="use2 llm"><b>LLM 체제에서</b> — 공유 파일 37개에서 어느 부분이 어느 기능 몫인지를 <b>LLM이 초안 작성</b>한다(사람이 일일이 세던 일). 검사기는 그 지분대로 코드가 살아있는지만 확인.</span></div></details>
@@ -586,16 +579,13 @@ verdict: pass</pre><span class="use2"><b>어떻게 쓰나</b> — 검사기가 �
     <div class="eyebrow"><span class="sn">S16 / 16</span> · 한 장 요약</div>
     <h2>결론</h2>
     <div class="rows">
-      <div class="row flat b-green"><span class="k">작은 변화</span><p><span style="color:var(--faint)">(4·7p)</span> 하위 패치엔 <b>규칙 기반이 그대로 유효</b> — 충돌 0·자동 병합.</p></div>
-      <div class="row flat b-red"><span class="k">큰 변화</span><p><span style="color:var(--faint)">(4·7p)</span> 1.13.2처럼 구조가 바뀌면 <b>오판(리로케이션)</b> + <b>관리 파일 ~25개 운영 부담</b><span style="color:var(--faint)">(6p)</span> → 한계.</p></div>
+      <div class="row flat b-green"><span class="k">작은 변화</span><p><span style="color:var(--faint)">(4·5p)</span> 하위 패치엔 <b>규칙 기반이 그대로 유효</b> — 충돌 0·자동 병합.</p></div>
+      <div class="row flat b-red"><span class="k">큰 변화</span><p><span style="color:var(--faint)">(4·5p)</span> 1.13.2처럼 구조가 바뀌면 <b>오판(리로케이션)</b> + <b>관리 파일 ~25개 운영 부담</b><span style="color:var(--faint)">(6p)</span> → 한계.</p></div>
       <div class="row b-blue"><span class="k">그래서</span><p><span style="color:var(--faint)">(9·10p)</span> 규칙 기반은 버리지 않는다. <b>예측 가능 범위엔 그대로</b>, 불확실할 때만 하이브리드 — 그 관리 산출물은 <b>LLM이 만들고 검사기는 검증만</b>.</p></div>
     </div>
     <div class="two" style="margin-top:12px">
       <div class="row b-teal"><span class="k">① 방식 통제</span><p>규칙으로 못 박던 것을 <b>지시(프롬프트·MD)로 옮겨</b> AI가 <b>일하는 방식</b>을 통제 (브랜치·커밋·범위). <span class="sub">4페이지 ①</span></p></div>
       <div class="row b-green"><span class="k">② 결과 통제</span><p>과정마다 <b>정해진 형식으로 결과를 뱉게 강제</b> → 검사기가 판정. <span class="sub">4페이지 ②</span></p></div>
-    </div>
-    <div class="rows" style="margin-top:11px">
-      <div class="row b-blue"><span class="k">③ 최종 목표</span><p>①②를 <b>과정 단위로 굳혀 ‘스킬’(정해진 작업 절차)로 만들고</b>, 그걸 묶어 <b>OpenMetadata 운영 하네스 템플릿</b>을 갖추는 것. <span class="sub">버전업 때마다 새로 짜는 게 아니라 <b>템플릿을 꺼내 쓰는</b> 상태 — 다음 버전에도, 다른 시스템에도 같은 절차가 돈다. <b>아직 만들지 않았다.</b></span></p></div>
     </div>
     <div class="callout good"><span class="lbl">한 줄 &nbsp;(harness = 고삐)</span>업그레이드가 불확실해도 <b>산출물을 예측 가능하게 만들어 통제</b>한다 — AI를 덜 쓰는(minimize) 게 아니라 <b>고삐를 채우는(harness)</b> 것. <span style="color:var(--muted);font-weight:400">&nbsp; 현재: 1.13.1 9/9 · 1.13.2 부분 / 다음: 주장–증거 자동 대조기.</span></div>
   </div></section>
