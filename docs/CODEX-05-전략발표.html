@@ -284,7 +284,7 @@ allowed_changed_paths:          <span class="cm"># 건드려도 되는 경로 ~5
         </ol>
         <div class="vs"><span class="a"><em>LLM이 하면</em>“공식 버전에서 돌려봤고 실패했습니다” — <b>그 말이 사실인지 알 방법이 없다.</b></span><span class="b"><em>검사기가 하면</em>어느 커밋에서 무슨 테스트가 어떻게 실패했는지 <b>파일로 남는다.</b></span></div>
         <p class="note" style="margin-top:7px">▸ <b>테스트는 LLM이 만들어도 된다.</b> 사람이 그걸 다 읽어보고 “제대로 짰나”를 판단할 수는 없으니, <b>커스텀 없이 한 번 돌려 걸러낸다</b> — <b>LLM에게 테스트를 맡길수록 이 항목이 더 필요해진다.</b></p>
-        <p class="note" style="margin-top:4px;color:var(--amber)">▸ <b>한계</b> — <b>아무것도 안 보는 테스트</b>는 걸러내지만, <b>덜 보는 테스트는 못 걸러낸다.</b> <span class="sub" style="display:inline;color:var(--muted)">예: <code>status_code == 200</code>만 확인해도 커스텀이 없으면 404라 실패하므로 “진짜 테스트”로 인정된다 — 정작 값이 맞는지·검색에 반영되는지는 안 보는데도. <b>그래서 사람이 읽어야 할 한 가지가 남는다 → 12페이지의 불변식.</b></span></p>
+        <p class="note" style="margin-top:4px;color:var(--amber)">▸ <b>한계</b> — <b>아무것도 안 보는 테스트</b>는 걸러내지만, <b>덜 보는 테스트는 못 걸러낸다.</b> <span class="sub" style="display:inline;color:var(--muted)">예: <code>status_code == 200</code>만 확인해도 커스텀이 없으면 404라 실패하므로 “진짜 테스트”로 인정된다 — 정작 값이 맞는지·검색에 반영되는지는 안 보는데도. <b>향후 개선 — 돌연변이 테스트</b>로 메울 수 있다. 커스텀을 <b>통째로 빼는 대신 한 줄씩만 바꿔</b>(예: 비교 조건을 반대로) 그때도 테스트가 실패하는지 본다 → <b>‘덜 보는 테스트’까지 드러난다.</b></span></p>
         <details class="ev"><summary>실제 결과물</summary><pre><span class="cm"># source-patch-kill-evidence.yaml</span>
 gates:
 - name: source-patch-kill:BANK-OM-006        <span class="cm"># Sybase</span>
@@ -353,18 +353,20 @@ finally: client.delete(...)                          <span class="cm"># 흔적 �
     </div>
   </div></section>
 
-  <section class="slide"><div class="wrap">
+    <section class="slide"><div class="wrap">
     <div class="eyebrow"><span class="sn">S08 / 17</span> · 테스트 결론</div>
     <h2>그래서 내린 판단</h2>
     <p class="lede">처음의 <b>규칙 기반 · AI 최소화</b> 전략을 실제로 돌려본 결과 —</p>
     <div class="rows">
-      <div class="row b-green"><span class="k">잘 통한 것</span><p><b>정해진 틀 안에서는 잘 통했다.</b> <span class="sub">1.13.0→1.13.1은 충돌 0으로 깔끔히 통과.</span></p></div>
       <div class="row b-red"><span class="k">안 된 것 ①</span><p><b>돌발 상황에는 유연하지 못했다.</b> <span class="sub">규칙은 미리 정해둔 것만 보므로, 예상 못 한 변경이 오면 사람이 손으로 따라가야 한다.</span></p></div>
       <div class="row b-red"><span class="k">안 된 것 ②</span><p><b>유지 비용이 컸다.</b> <span class="sub">그때마다 등록 경로와 관리 파일을 다시 맞춰야 한다.</span></p></div>
+      <div class="row b-green"><span class="k">잘 된 것</span><p>어려웠던 건 <b>대처와 관리</b>였지 <b>판정</b>이 아니었다. 정해진 형식 안에서 <b>PASS/FAIL을 흔들림 없이 내는 일</b>은 규칙 기반이 해냈다. <span class="sub">그 테스트가 진짜인지(허위 테스트 방지) · 안 돌린 걸 통과로 세지 않는지(막고 보기) · 검사한 코드가 그대로인지(못박기) · 같은 코드면 같은 판정인지(결정론) — <b>7페이지의 강점들.</b> → <b>대처와 관리를 LLM에게 넘겨도 이 판정은 그대로 쓸 수 있다.</b></span></p></div>
     </div>
-    <div class="callout"><span class="lbl">판단</span><b>지속 가능한 운영이 어렵다.</b> → 그래서 <b>기본 운영 구조를 LLM으로 옮기되, 통제는 놓지 않는다</b> — 규칙으로 못 박던 것을 <b>① 같은 효과를 내는 지시(프롬프트·MD)</b>로 주고, <b>② 과정마다 정해진 형식으로 결과를 받는다.</b> <span class="sub">자유서술로 “했다”고 적게 두지 않는다는 뜻. <b>결국 하네스 방식이 필요하다는 걸 다시 확인한 셈이다.</b></span></div>
-    <div class="rows" style="margin-top:10px">
-      <div class="row b-blue"><span class="k">최종 목표</span><p>①②를 <b>과정 단위로 굳혀 ‘스킬’(정해진 작업 절차)로 만들고</b>, 그걸 묶어 <b>OpenMetadata 운영 하네스 템플릿</b>을 갖추는 것. <span class="sub">버전업 때마다 새로 짜는 게 아니라 <b>템플릿을 꺼내 쓰는</b> 상태 — 다음 버전에도, 다른 시스템에도 같은 절차가 돈다. <b>아직 만들지 않았다.</b></span></p></div>
+    <div class="callout"><span class="lbl">판단</span><b>지속 가능한 운영이 어렵다.</b> → <b>기본 운영 구조를 LLM으로 옮기되, 통제는 놓지 않는다.</b></div>
+    <div class="rows" style="margin-top:8px">
+      <div class="row b-teal"><span class="k">① 방식 통제</span><p><b>어떻게 일을 하는지를 지시(프롬프트·MD)로 통제</b>한다. <span class="sub">규칙으로 못 박던 것을 LLM에게 주는 지시로 옮긴다 — 어떤 순서로, 어디까지 손대고, 무엇을 남길지.</span></p></div>
+      <div class="row b-green"><span class="k">② 결과 통제</span><p>과정마다 <b>정해진 형식으로 결과를 뱉게 강제</b> → 검사기가 판정. <span class="sub">자유서술로 “했다”고 적게 두지 않는다는 뜻.</span></p></div>
+      <div class="row b-blue"><span class="k">③ 최종 목표</span><p>①②를 <b>과정 단위로 굳혀 ‘스킬’(정해진 작업 절차)로 만들고</b>, 그걸 묶어 <b>OpenMetadata 운영 하네스 템플릿</b>을 갖추는 것. <span class="sub">버전업 때마다 새로 짜는 게 아니라 <b>템플릿을 꺼내 쓰는</b> 상태. <b>아직 만들지 않았다.</b></span></p></div>
     </div>
   </div></section>
 
@@ -442,7 +444,7 @@ assurance: { contracts: [CONTRACT-SYBASE-CONNECTOR] }</pre><span class="use2"><b
       <details class="mf"><summary><span class="fn">contracts.yaml</span><span class="use">지켜야 할 약속 + 확인 테스트</span><span class="mf-badge keep">채택</span></summary><div class="mbody"><b>무슨 파일</b> — 각 기능이 ‘이건 꼭 지켜져야 한다’는 약속과, 그 약속을 확인하는 테스트 목록.<pre>- id: CONTRACT-INSTANCE-CODE
   invariant: codeGroup/codeValue가 CRUD·재색인 뒤에도 동일 조회
   required_tests: [test_instance_code.py::test_crud_search_roundtrip]
-  customization_ids: [BANK-OM-001, ...]</pre><span class="use2"><b>어떻게 쓰나</b> — 기능마다 그 약속을 지키는 테스트가 하나라도 연결돼 있고, 그 테스트가 실제로 있고 돌아가는지 확인(빈 껍데기면 실패 처리).</span><span class="use2 llm"><b>LLM 체제에서</b> — <b>여기가 사람과 LLM의 경계선</b>이다. <b>“무엇을 지켜야 하는가”(<code>invariant</code>)는 사람이 문장으로 확인</b>하고, <b>“그걸 어떻게 확인하는가”(테스트 코드)는 LLM이 짠다.</b> 테스트 코드 수백 줄을 읽는 대신 <b>한 문장만 검토</b>하면 되므로 — 사람이 안 봐도 되는 게 아니라 <b>볼 양이 압축</b>된다. <span class="cm">※ 빼보기는 ‘아무것도 안 보는 테스트’만 걸러내므로(7p), <b>불변식이 촘촘해야 ‘덜 보는 테스트’까지 막힌다.</b></span></span></div></details>
+  customization_ids: [BANK-OM-001, ...]</pre><span class="use2"><b>어떻게 쓰나</b> — 기능마다 그 약속을 지키는 테스트가 하나라도 연결돼 있고, 그 테스트가 실제로 있고 돌아가는지 확인(빈 껍데기면 실패 처리).</span><span class="use2 llm"><b>LLM 체제에서</b> — <b>여기가 사람과 LLM의 경계선</b>이다. <b>“무엇을 지켜야 하는가”(<code>invariant</code>)는 사람이 문장으로 확인</b>하고, <b>“그걸 어떻게 확인하는가”(테스트 코드)는 LLM이 짠다.</b> 테스트 코드 수백 줄을 읽는 대신 <b>한 문장만 검토</b>하면 되므로 — 사람이 안 봐도 되는 게 아니라 <b>볼 양이 압축</b>된다. <span class="cm">※ 허위 테스트 방지 검사는 ‘아무것도 안 보는 테스트’만 걸러내므로(7p), <b>불변식이 촘촘해야 ‘덜 보는 테스트’까지 막힌다.</b></span></span></div></details>
       <details class="mf"><summary><span class="fn">shared-path-owners.yaml</span><span class="use">공유 파일의 기능별 지분(37개)</span><span class="mf-badge keep">채택</span></summary><div class="mbody"><b>무슨 파일</b> — 한 파일을 여러 기능이 같이 고칠 때, 그 파일의 어느 부분이 어느 기능 몫인지 적어둔 ‘지분표’(공유 파일 37개).<pre>.../databaseService.json: [BANK-OM-006, BANK-OM-007]   # Sybase, Tibero
 .../AuthenticatedAppRouter.tsx: [BANK-OM-001, 002, 003]  # 3개 화면·경로
 .../locale/ko-kr.json: [BANK-OM-001..004]               # 뜻 있는 문구 추가</pre><span class="use2"><b>어떻게 쓰나</b> — 그 공유 파일에서 ‘각 기능 몫의 코드가 그대로 살아있나’를 기능별로 확인(다국어 파일은 ‘뜻 있는 문구 추가’만 지분으로 보고, 줄맞춤 변경은 무시).</span><span class="use2 llm"><b>LLM 체제에서</b> — 공유 파일 37개에서 어느 부분이 어느 기능 몫인지를 <b>LLM이 초안 작성</b>한다(사람이 일일이 세던 일). 검사기는 그 지분대로 코드가 살아있는지만 확인.</span></div></details>
@@ -598,7 +600,7 @@ verdict: pass</pre><span class="use2"><b>어떻게 쓰나</b> — 검사기가 �
       <div class="row b-blue"><span class="k">그래서</span><p><span style="color:var(--faint)">(10·11p)</span> 규칙 기반은 버리지 않는다. <b>예측 가능 범위엔 그대로</b>, 불확실할 때만 하이브리드 — 그 관리 산출물은 <b>LLM이 만들고 검사기는 검증만</b>.</p></div>
     </div>
     <div class="two" style="margin-top:12px">
-      <div class="row b-teal"><span class="k">① 방식 통제</span><p>규칙으로 못 박던 것을 <b>지시(프롬프트·MD)로 옮겨</b> AI가 <b>일하는 방식</b>을 통제 (브랜치·커밋·범위). <span class="sub">4페이지 ①</span></p></div>
+      <div class="row b-teal"><span class="k">① 방식 통제</span><p><b>어떻게 일을 하는지를 지시(프롬프트·MD)로 통제</b>한다 (순서·범위·남길 것). <span class="sub">4페이지 ①</span></p></div>
       <div class="row b-green"><span class="k">② 결과 통제</span><p>과정마다 <b>정해진 형식으로 결과를 뱉게 강제</b> → 검사기가 판정. <span class="sub">4페이지 ②</span></p></div>
     </div>
     <div class="callout good"><span class="lbl">한 줄 &nbsp;(harness = 고삐)</span>업그레이드가 불확실해도 <b>산출물을 예측 가능하게 만들어 통제</b>한다 — AI를 덜 쓰는(minimize) 게 아니라 <b>고삐를 채우는(harness)</b> 것. <span style="color:var(--muted);font-weight:400">&nbsp; 현재: 1.13.1 9/9 · 1.13.2 부분 / 다음: 주장–증거 자동 대조기.</span></div>
