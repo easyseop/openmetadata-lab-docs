@@ -153,7 +153,7 @@ details.mf.new{border-style:dashed;border-color:color-mix(in srgb,var(--blue) 55
 </style>
 
 <div class="progress" id="prog"></div>
-<div class="counter" id="cnt">01 / 16</div>
+<div class="counter" id="cnt">01 / 17</div>
 <main class="deck" id="deck">
 
   <section class="slide hero"><div class="wrap">
@@ -169,7 +169,7 @@ details.mf.new{border-style:dashed;border-color:color-mix(in srgb,var(--blue) 55
   </div></section>
 
   <section class="slide"><div class="wrap">
-    <div class="eyebrow"><span class="sn">S02 / 16</span> · 왜 시작했나</div>
+    <div class="eyebrow"><span class="sn">S02 / 17</span> · 왜 시작했나</div>
     <h2>배경과 처음의 생각</h2>
     <div class="rows">
       <div class="row b-blue"><span class="k">목표</span><p>우리가 손댄 부분(DB 커넥터·자체 화면·한글 입력 등)이 공식 버전업 뒤에도 안 깨지고 살아 있는지 확인한다.</p></div>
@@ -179,7 +179,7 @@ details.mf.new{border-style:dashed;border-color:color-mix(in srgb,var(--blue) 55
   </div></section>
 
   <section class="slide"><div class="wrap">
-    <div class="eyebrow"><span class="sn">S03 / 16</span> · 어떻게 만들었나 (초기)</div>
+    <div class="eyebrow"><span class="sn">S03 / 17</span> · 어떻게 만들었나 (초기)</div>
     <h2>처음 만든 것 — 규칙 기반 자동 검사기</h2>
     <div class="concept">
       <div class="c"><b>파일 위치</b><span>‘이 기능은 이 파일들에’를 목록에 적고 대조</span></div>
@@ -229,7 +229,7 @@ allowed_changed_paths:          <span class="cm"># 건드려도 되는 경로 ~5
   </div></section>
 
   <section class="slide"><div class="wrap">
-    <div class="eyebrow"><span class="sn">S04 / 16</span> · 직접 돌려봄</div>
+    <div class="eyebrow"><span class="sn">S04 / 17</span> · 직접 돌려봄</div>
     <h2>업그레이드 테스트</h2>
     <div class="two">
       <div class="row b-green"><span class="k">1.13.0→1.13.1</span><p><b>성공</b> — 변화가 작아 충돌 0·자동 병합. 규칙 기반으로 깔끔히 통과. <span class="tag t-green">PASS</span></p></div>
@@ -249,7 +249,7 @@ allowed_changed_paths:          <span class="cm"># 건드려도 되는 경로 ~5
   </div></section>
 
   <section class="slide"><div class="wrap">
-    <div class="eyebrow"><span class="sn">S05 / 16</span> · 드러난 한계 ① — 규칙 검사의 사각</div>
+    <div class="eyebrow"><span class="sn">S05 / 17</span> · 드러난 한계 ① — 규칙 검사의 사각</div>
     <h2>규칙 검사만으로는 못 보는 것들</h2>
     <div class="rows">
       <div class="row b-red"><span class="k">이동(리로케이션)</span><p>공식이 코드를 다른 파일로 옮기면 못 따라간다 (가장 큰 약점). <span class="sub">실제: Sybase의 <code>case DatabaseServiceType.Sybase</code> 코드가 <code>DatabaseServiceUtils.tsx</code> → <code>*PureUtils.ts</code>로 이사. 검사기는 매니페스트의 옛 경로만 봐서 “커스텀이 사라졌다”며 실패(BLOCK). 실제론 새 파일에 멀쩡히 살아있었음 = 오판.</span></p></div>
@@ -260,7 +260,7 @@ allowed_changed_paths:          <span class="cm"># 건드려도 되는 경로 ~5
   </div></section>
 
   <section class="slide"><div class="wrap">
-    <div class="eyebrow"><span class="sn">S06 / 16</span> · 드러난 한계 ② — 지속 가능 운영</div>
+    <div class="eyebrow"><span class="sn">S06 / 17</span> · 드러난 한계 ② — 지속 가능 운영</div>
     <h2>지속 가능 운영의 한계 — 관리할 파일이 너무 많다</h2>
     <div class="rows">
       <div class="row b-red"><span class="k">부담</span><p>무엇을 바꿨는지·어디까지 허용인지·누가 승인했는지를 전부 사람이 파일로 관리한다.</p></div>
@@ -271,11 +271,11 @@ allowed_changed_paths:          <span class="cm"># 건드려도 되는 경로 ~5
   </div></section>
 
   <section class="slide"><div class="wrap">
-    <div class="eyebrow"><span class="sn">S07 / 16</span> · 왜 ‘룰베이스 검사기’인가</div>
+    <div class="eyebrow"><span class="sn">S07 / 17</span> · 왜 ‘룰베이스 검사기’인가</div>
     <h2>강점 — LLM 혼자선 보장 못 하는 것들</h2>
     <p class="lede">아래는 전부 <b>LLM도 할 수 있는 일</b>이다. 차이는 능력이 아니라 <b>누가 증언하느냐</b>에 있다 — <b>LLM이 하면 LLM의 말</b>이 되고, <b>검사기가 하면 증거</b>가 된다.</p>
     <div class="rows">
-      <div class="row b-green compact"><span class="k">빼보기(patch-kill)</span><div class="rbody"><p>기능이 되는지가 아니라, <b>그 테스트가 진짜인지</b>를 검사한다.</p>
+      <div class="row b-green compact"><span class="k">허위 테스트 방지</span><div class="rbody"><p>기능이 되는지가 아니라, <b>그 테스트가 진짜인지</b>를 검사한다.</p>
         <ol class="mini">
           <li>커스터마이징 기능 테스트 <b>사전 정의</b></li>
           <li><b>공식 버전</b>에서 테스트 — 기대결과 <span class="tag t-red">FAIL</span></li>
@@ -284,7 +284,7 @@ allowed_changed_paths:          <span class="cm"># 건드려도 되는 경로 ~5
         </ol>
         <div class="vs"><span class="a"><em>LLM이 하면</em>“공식 버전에서 돌려봤고 실패했습니다” — <b>그 말이 사실인지 알 방법이 없다.</b></span><span class="b"><em>검사기가 하면</em>어느 커밋에서 무슨 테스트가 어떻게 실패했는지 <b>파일로 남는다.</b></span></div>
         <p class="note" style="margin-top:7px">▸ <b>테스트는 LLM이 만들어도 된다.</b> 사람이 그걸 다 읽어보고 “제대로 짰나”를 판단할 수는 없으니, <b>커스텀 없이 한 번 돌려 걸러낸다</b> — <b>LLM에게 테스트를 맡길수록 이 항목이 더 필요해진다.</b></p>
-        <p class="note" style="margin-top:4px;color:var(--amber)">▸ <b>한계</b> — <b>아무것도 안 보는 테스트</b>는 걸러내지만, <b>덜 보는 테스트는 못 걸러낸다.</b> <span class="sub" style="display:inline;color:var(--muted)">예: <code>status_code == 200</code>만 확인해도 커스텀이 없으면 404라 실패하므로 “진짜 테스트”로 인정된다 — 정작 값이 맞는지·검색에 반영되는지는 안 보는데도. <b>그래서 사람이 읽어야 할 한 가지가 남는다 → 11페이지의 불변식.</b></span></p>
+        <p class="note" style="margin-top:4px;color:var(--amber)">▸ <b>한계</b> — <b>아무것도 안 보는 테스트</b>는 걸러내지만, <b>덜 보는 테스트는 못 걸러낸다.</b> <span class="sub" style="display:inline;color:var(--muted)">예: <code>status_code == 200</code>만 확인해도 커스텀이 없으면 404라 실패하므로 “진짜 테스트”로 인정된다 — 정작 값이 맞는지·검색에 반영되는지는 안 보는데도. <b>그래서 사람이 읽어야 할 한 가지가 남는다 → 12페이지의 불변식.</b></span></p>
         <details class="ev"><summary>실제 결과물</summary><pre><span class="cm"># source-patch-kill-evidence.yaml</span>
 gates:
 - name: source-patch-kill:BANK-OM-006        <span class="cm"># Sybase</span>
@@ -351,11 +351,25 @@ finally: client.delete(...)                          <span class="cm"># 흔적 �
         <div class="vs"><span class="a"><em>LLM은</em>같은 입력에도 <b>답이 흔들린다</b> — 그래서 “배포해도 되나”의 기준으로 삼을 수 없다.</span><span class="b"><em>검사기는</em>규칙이라 <b>흔들리지 않는다</b> — 이건 흉내로 메울 수 없는 차이다.</span></div>
         </div></div>
     </div>
-    <div class="callout good"><span class="lbl">허위 테스트 방지</span>위 결과물들은 <b>LLM이 만든 게 아니다</b> — 검사기가 실행해서 남긴 것이다. 그래서 “테스트 통과했습니다”가 <b>사실인지 아닌지가 이 파일들로 갈린다.</b> <span class="sub">막아내는 허위는 두 종류 — <b>①</b> 아무것도 안 지키는 <b>속 빈 테스트</b>(빼보기가 색출) <b>②</b> <b>안 돌려놓고 통과로 세는 것</b>(실패가 0인데도 ‘막음’이 나오는 위 두 번째).</span></div>
   </div></section>
 
   <section class="slide"><div class="wrap">
-    <div class="eyebrow"><span class="sn">S08 / 16</span> · 참고한 다른 접근</div>
+    <div class="eyebrow"><span class="sn">S08 / 17</span> · 테스트 결론</div>
+    <h2>그래서 내린 판단</h2>
+    <p class="lede">처음의 <b>규칙 기반 · AI 최소화</b> 전략을 실제로 돌려본 결과 —</p>
+    <div class="rows">
+      <div class="row b-green"><span class="k">잘 통한 것</span><p><b>정해진 틀 안에서는 잘 통했다.</b> <span class="sub">1.13.0→1.13.1은 충돌 0으로 깔끔히 통과.</span></p></div>
+      <div class="row b-red"><span class="k">안 된 것 ①</span><p><b>돌발 상황에는 유연하지 못했다.</b> <span class="sub">규칙은 미리 정해둔 것만 보므로, 예상 못 한 변경이 오면 사람이 손으로 따라가야 한다.</span></p></div>
+      <div class="row b-red"><span class="k">안 된 것 ②</span><p><b>유지 비용이 컸다.</b> <span class="sub">그때마다 등록 경로와 관리 파일을 다시 맞춰야 한다.</span></p></div>
+    </div>
+    <div class="callout"><span class="lbl">판단</span><b>지속 가능한 운영이 어렵다.</b> → 그래서 <b>기본 운영 구조를 LLM으로 옮기되, 통제는 놓지 않는다</b> — 규칙으로 못 박던 것을 <b>① 같은 효과를 내는 지시(프롬프트·MD)</b>로 주고, <b>② 과정마다 정해진 형식으로 결과를 받는다.</b> <span class="sub">자유서술로 “했다”고 적게 두지 않는다는 뜻. <b>결국 하네스 방식이 필요하다는 걸 다시 확인한 셈이다.</b></span></div>
+    <div class="rows" style="margin-top:10px">
+      <div class="row b-blue"><span class="k">최종 목표</span><p>①②를 <b>과정 단위로 굳혀 ‘스킬’(정해진 작업 절차)로 만들고</b>, 그걸 묶어 <b>OpenMetadata 운영 하네스 템플릿</b>을 갖추는 것. <span class="sub">버전업 때마다 새로 짜는 게 아니라 <b>템플릿을 꺼내 쓰는</b> 상태 — 다음 버전에도, 다른 시스템에도 같은 절차가 돈다. <b>아직 만들지 않았다.</b></span></p></div>
+    </div>
+  </div></section>
+
+  <section class="slide"><div class="wrap">
+    <div class="eyebrow"><span class="sn">S09 / 17</span> · 참고한 다른 접근</div>
     <h2>8/5 공유된 ‘LLM 기반 운영 방식’ (참고)</h2>
     <div class="rows">
       <div class="row b-blue"><span class="k">개념</span><p>규칙·지식 문서·자동화로 LLM이 버전 포팅을 빠르게 수행하는 방식. <span class="sub">“포팅 시간 크게 단축(빠르고 체계적)”은 그 방식의 <b>자체 보고 수치</b> — 우리가 실행·검증한 건 아니다.</span></p></div>
@@ -365,7 +379,7 @@ finally: client.delete(...)                          <span class="cm"># 흔적 �
   </div></section>
 
   <section class="slide"><div class="wrap">
-    <div class="eyebrow"><span class="sn">S09 / 16</span> · 방향 전환</div>
+    <div class="eyebrow"><span class="sn">S10 / 17</span> · 방향 전환</div>
     <h2>LLM이 일하고, 검사기가 근거를 붙인다</h2>
     <div class="two">
       <div class="row b-blue"><span class="k">LLM</span><p><b>판단·제안</b><span class="sub">무엇을 바꿀지, 코드가 어디로 옮겨졌을지, 충돌 해결, 필요한 테스트.</span></p></div>
@@ -383,7 +397,7 @@ finally: client.delete(...)                          <span class="cm"># 흔적 �
   </div></section>
 
   <section class="slide"><div class="wrap">
-    <div class="eyebrow"><span class="sn">S10 / 16</span> · 도입 제안 ① — 검증되는 과정</div>
+    <div class="eyebrow"><span class="sn">S11 / 17</span> · 도입 제안 ① — 검증되는 과정</div>
     <h2>커스텀 하나(BANK-OM ID)가 검증되는 과정</h2>
     <p class="lede"><b>제안:</b> 하이브리드에서 LLM 작업의 ‘증거 층’으로 <b>이 검사기를 도입</b>한다 (자랑이 아니라 도입 대상). 커스텀 하나가 아래 <b>6단계</b>로 등록·검사·증거화된다.</p>
     <div class="flow">
@@ -398,7 +412,7 @@ finally: client.delete(...)                          <span class="cm"># 흔적 �
   </div></section>
 
   <section class="slide"><div class="wrap">
-    <div class="eyebrow"><span class="sn">S11 / 16</span> · 도입 제안 ② — LLM이 만든다</div>
+    <div class="eyebrow"><span class="sn">S12 / 17</span> · 도입 제안 ② — LLM이 만든다</div>
     <h2>LLM이 만들고, 사람이 확인한다 <span style="font-weight:400;color:var(--muted);font-size:.6em">관리 파일 9종</span></h2>
     <p class="lede">6페이지에서 말한 <b>“관리할 파일이 너무 많다”</b>는 부담의 정체가 바로 이 9종이다. 없애는 게 아니라 <b>작성·갱신을 LLM에게 넘긴다</b> — 사람은 확인만, 검사기는 판정만 한다.</p>
     <p class="note" style="margin-top:2px">▸ <b>1차 검토</b> <span class="sub">(이 장부터 3장에 걸친 <b>전체 18종</b> 기준)</span> — <span class="mf-badge keep">채택</span> 8 · <span class="mf-badge cut">제외</span> 3(삭선·흐림, 지우지 않고 남김) · <span class="mf-badge hold">보류</span> 5 · <span class="mf-badge new">신규</span> 2 제안 &nbsp;·&nbsp; 각 카드를 펼치면 <b>용도 · 실제 예시 · 검사기 사용법 · LLM 체제에서의 역할</b>이 나옵니다.</p>
@@ -469,7 +483,7 @@ regression_guard_from_failures: true      # ③ 그 원인을 이번 테스트�
   </div></section>
 
   <section class="slide"><div class="wrap">
-    <div class="eyebrow"><span class="sn">S12 / 16</span> · 도입 제안 ③ — LLM이 못 바꾼다</div>
+    <div class="eyebrow"><span class="sn">S13 / 17</span> · 도입 제안 ③ — LLM이 못 바꾼다</div>
     <h2>사람이 정하고, LLM이 못 바꾼다 <span style="font-weight:400;color:var(--muted);font-size:.6em">관리 파일 5종</span></h2>
     <p class="lede">LLM에게 일을 맡기려면 <b>그 반대편에 고정된 것</b>이 있어야 한다. 이 5종은 <b>LLM이 고칠 수 없는 영역</b>이다 — 늘 같은 결과를 내고, 승인으로도 뒤집히지 않는다.</p>
     <p class="note" style="margin-top:2px">▸ 이번 검토에서 <b>3종을 덜어냈다</b> — 우리 스스로를 제한하는 정책은 빼고, <b>진짜 위험한 구역 차단만</b> 남긴다.</p>
@@ -502,7 +516,7 @@ candidate_lock_digest: sha256:...   # 내용 바뀌면 승인 자동 무효</pre
   </div></section>
 
   <section class="slide"><div class="wrap">
-    <div class="eyebrow"><span class="sn">S13 / 16</span> · 도입 제안 ④ — 검사기가 남긴다</div>
+    <div class="eyebrow"><span class="sn">S14 / 17</span> · 도입 제안 ④ — 검사기가 남긴다</div>
     <h2>검사기가 자동으로 남긴다 <span style="font-weight:400;color:var(--muted);font-size:.6em">관리 파일 4종</span></h2>
     <p class="lede">사람도 LLM도 쓰지 않는다. <b>검사기가 실행하고 그 결과를 남긴다.</b> LLM이 “했습니다”라고 적었을 때 <b>대조할 원본</b>이 되는 것들이다.</p>
     <p class="note" style="margin-top:2px">▸ 관리 부담이 <b>원래 0</b>인 영역이다 — 만드는 주체가 사람이 아니기 때문.</p>
@@ -537,7 +551,7 @@ verdict: pass</pre><span class="use2"><b>어떻게 쓰나</b> — 검사기가 �
   </div></section>
 
   <section class="slide"><div class="wrap">
-    <div class="eyebrow"><span class="sn">S14 / 16</span> · 도입 제안 마무리</div>
+    <div class="eyebrow"><span class="sn">S15 / 17</span> · 도입 제안 마무리</div>
     <h2>그래서 빨라지나 — 시간이 어디서 늘고 줄나</h2>
     <p class="lede">이 질문에 <b>“무조건 빨라진다”고 답하지 않는다.</b> 관리 파일을 전부 유지한 채 LLM까지 얹으면 <b>오히려 두 배로 느려진다</b> — 이번 1차 검토에서 덜어낸 이유가 바로 이것이다.</p>
 
@@ -564,7 +578,7 @@ verdict: pass</pre><span class="use2"><b>어떻게 쓰나</b> — 검사기가 �
   </div></section>
 
           <section class="slide"><div class="wrap">
-    <div class="eyebrow"><span class="sn">S15 / 16</span> · 오해 방지</div>
+    <div class="eyebrow"><span class="sn">S16 / 17</span> · 오해 방지</div>
     <h2>검사기의 정확한 위치 — LLM 위에 얹는 안전장치</h2>
     <p class="lede">검사기는 <b>LLM을 대신하지 않는다.</b> 검사도 판단도 <b>LLM이 먼저 한다</b> — 검사기는 그 결과를 <b>한 번 더 확인</b>할 뿐이다. 그것도 <b>LLM이 스스로 확인할 수 없는 것만</b> 본다.</p>
     <div class="rows">
@@ -576,12 +590,12 @@ verdict: pass</pre><span class="use2"><b>어떻게 쓰나</b> — 검사기가 �
   </div></section>
 
   <section class="slide"><div class="wrap">
-    <div class="eyebrow"><span class="sn">S16 / 16</span> · 한 장 요약</div>
+    <div class="eyebrow"><span class="sn">S17 / 17</span> · 한 장 요약</div>
     <h2>결론</h2>
     <div class="rows">
       <div class="row flat b-green"><span class="k">작은 변화</span><p><span style="color:var(--faint)">(4·5p)</span> 하위 패치엔 <b>규칙 기반이 그대로 유효</b> — 충돌 0·자동 병합.</p></div>
       <div class="row flat b-red"><span class="k">큰 변화</span><p><span style="color:var(--faint)">(4·5p)</span> 1.13.2처럼 구조가 바뀌면 <b>오판(리로케이션)</b> + <b>관리 파일 ~25개 운영 부담</b><span style="color:var(--faint)">(6p)</span> → 한계.</p></div>
-      <div class="row b-blue"><span class="k">그래서</span><p><span style="color:var(--faint)">(9·10p)</span> 규칙 기반은 버리지 않는다. <b>예측 가능 범위엔 그대로</b>, 불확실할 때만 하이브리드 — 그 관리 산출물은 <b>LLM이 만들고 검사기는 검증만</b>.</p></div>
+      <div class="row b-blue"><span class="k">그래서</span><p><span style="color:var(--faint)">(10·11p)</span> 규칙 기반은 버리지 않는다. <b>예측 가능 범위엔 그대로</b>, 불확실할 때만 하이브리드 — 그 관리 산출물은 <b>LLM이 만들고 검사기는 검증만</b>.</p></div>
     </div>
     <div class="two" style="margin-top:12px">
       <div class="row b-teal"><span class="k">① 방식 통제</span><p>규칙으로 못 박던 것을 <b>지시(프롬프트·MD)로 옮겨</b> AI가 <b>일하는 방식</b>을 통제 (브랜치·커밋·범위). <span class="sub">4페이지 ①</span></p></div>
